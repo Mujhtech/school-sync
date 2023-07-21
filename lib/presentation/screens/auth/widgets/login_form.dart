@@ -40,13 +40,41 @@ class _LoginFormState extends State<LoginForm> {
             isVisible: isPasswordVisible,
             controller: _passwordController,
           ),
-          const Height10(),
+          const Height15(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                'Forgot Password',
+                style: context.textTheme.bodySmall!.copyWith(fontSize: 10),
+              ),
+            ],
+          ),
+          const Height15(),
           PrimaryButton(
             label: 'Login',
             onPressed: () {
               context.router.goToSelectSchool();
             },
-          )
+          ),
+          const Height15(),
+          InkWell(
+            onTap: () => context.router.goToRegister(),
+            child: RichText(
+              text: TextSpan(
+                text: "Don't have account? ",
+                style: context.textTheme.bodySmall!.copyWith(fontSize: 10),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Sign up',
+                    style: context.textTheme.bodySmall!
+                        .copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

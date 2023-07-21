@@ -5,8 +5,17 @@ part of 'database.dart';
 // }
 
 extension UserEntityExtension on UserDataModel {
-  UserEntity toEntity(String tableName) =>
-      UserEntity(id: id, path: '$tableName/$id', createdAt: createdAt);
+  UserEntity toEntity(String tableName) => UserEntity(
+        id: id,
+        path: '$tableName/$id',
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
 }
 
 // extension BudgetEntityExtension on BudgetDataModel {

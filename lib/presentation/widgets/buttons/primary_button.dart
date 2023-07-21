@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:school_sync/presentation.dart';
-import 'package:school_sync/presentation/widgets/loading_spinner.dart';
 
 enum IconPosition { left, right }
 
@@ -75,7 +74,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         widget.onPressed();
       },
       color: widget.buttonColor ??
-          Colors.black.withOpacity(disable == true ? 0.3 : 1),
+          context.buttonColor.withOpacity(disable == true ? 0.3 : 1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(widget.radius),
         side: BorderSide(color: widget.borderColor),
@@ -111,7 +110,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                       Text(
                         widget.label,
                         style: context.textTheme.titleSmall!.copyWith(
-                          color: widget.textColor ?? Colors.white,
+                          color: widget.textColor ?? context.buttonTextColor,
                         ),
                       ),
                       if (widget.iconPosition ==
@@ -125,8 +124,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                   )
                 : Text(
                     widget.label,
-                    style: context.textTheme.titleSmall!
-                        .copyWith(color: widget.textColor ?? Colors.white),
+                    style: context.textTheme.titleSmall!.copyWith(
+                      color: widget.textColor ?? context.buttonTextColor,
+                    ),
                   ),
       ),
     );

@@ -9,10 +9,10 @@ class AddNewSchoolCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const CircleAvatar(
+        CircleAvatar(
           radius: 50,
-          backgroundColor: Colors.black,
-          child: Icon(
+          backgroundColor: context.theme.cardColor,
+          child: const Icon(
             TablerIcons.plus,
             size: 30,
             color: Colors.white,

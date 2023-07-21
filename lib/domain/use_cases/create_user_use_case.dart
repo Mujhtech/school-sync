@@ -1,18 +1,17 @@
-import '../entities/account_entity.dart';
-import '../repositories/auth.dart';
+import 'package:school_sync/core.dart';
+import 'package:school_sync/domain.dart';
 
 class CreateUserUseCase {
-  const CreateUserUseCase({
-    required AuthRepository auth,
-    //required Analytics analytics,
-  }) : _auth = auth;
-  // _analytics = analytics;
+  const CreateUserUseCase({required UsersRepository users}) : _users = users;
 
-  final AuthRepository _auth;
-  //final Analytics _analytics;
+  final UsersRepository _users;
 
-  Future<String> call(AccountEntity account) {
-    //_analytics.log(AnalyticsEvent.createUser(account.id)).ignore();
-    return _auth.signup(password: account.password, email: account.email);
+  Future<UserEntity?> call(String id, AccountEntity account) async {
+    try {
+      return _users.create(id, account);
+    } catch (error, stackTrace) {
+      AppLog.e(error, stackTrace);
+      return null;
+    }
   }
 }

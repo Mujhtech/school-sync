@@ -3,7 +3,8 @@ import 'package:school_sync/presentation.dart';
 
 const Color _kPrimaryLightColor = Color(0xFF006B5A);
 const Color _kPrimaryDarkColor = Color(0xFF5BDBBF);
-const Color _kBackgroundDarkColor = Color(0xFF010101);
+const Color _kBackgroundDarkColor = Color(0xFF1C1C1E);
+const Color _kBackgroundLightColor = Color(0xFFF2F2F7);
 const double _kIconSize = 28.0;
 
 @visibleForTesting
@@ -44,7 +45,11 @@ ThemeData themeBuilder(
     brightness: brightness,
   );
   final Color scaffoldBackgroundColor =
-      isDark ? _kBackgroundDarkColor : colorScheme.background;
+      isDark ? _kBackgroundDarkColor : _kBackgroundLightColor;
+
+  final Color cardColor = isDark ? Colors.black : Colors.white;
+
+  final Color iconColor = isDark ? Colors.white : Colors.black;
 
   final OutlineInputBorder textFieldBorder = OutlineInputBorder(
     borderSide: BorderSide.none,
@@ -67,9 +72,11 @@ ThemeData themeBuilder(
 
   return ThemeData(
     useMaterial3: true,
-    iconTheme: defaultTheme.iconTheme.copyWith(size: _kIconSize),
+    iconTheme:
+        defaultTheme.iconTheme.copyWith(size: _kIconSize, color: iconColor),
     primaryIconTheme: defaultTheme.primaryIconTheme.copyWith(size: _kIconSize),
     textTheme: defaultTheme.textTheme.merge(textTheme),
+    cardColor: cardColor,
     primaryTextTheme: defaultTheme.primaryTextTheme.merge(textTheme),
     shadowColor: colorScheme.scrim,
     scaffoldBackgroundColor: scaffoldBackgroundColor,

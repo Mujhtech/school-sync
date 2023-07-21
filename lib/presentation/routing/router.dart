@@ -10,6 +10,11 @@ class AppRouter {
 
   void pop() => Navigator.of(_context).pop();
 
+  Future<void> goToRegister() =>
+      _goTo((_) => const RegisterPage(), AppRoutes.register);
+
+  Future<void> goToLogin() => _goTo((_) => const LoginPage(), AppRoutes.login);
+
   Future<void> goToSelectSchool() =>
       _goTo((_) => const SelectSchoolPage(), AppRoutes.selectSchool);
 

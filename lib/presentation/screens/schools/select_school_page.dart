@@ -25,9 +25,11 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 40),
-                child: Text(
-                  AppString.mySchools,
-                  style: context.textTheme.titleLarge,
+                child: Center(
+                  child: Text(
+                    AppString.mySchools,
+                    style: context.textTheme.titleLarge,
+                  ),
                 ),
               ),
               const Height20(),
@@ -35,7 +37,7 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
                 height: 200,
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(context).copyWith(
-                    dragDevices: {
+                    dragDevices: <PointerDeviceKind>{
                       PointerDeviceKind.touch,
                       PointerDeviceKind.mouse,
                     },

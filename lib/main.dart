@@ -1,9 +1,14 @@
 import 'dart:async' as async;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:registry/registry.dart';
+import 'package:registry/registry.dart';
+import 'package:school_sync/data/repositories/user/user_local_impl.dart';
 import 'package:school_sync/domain/use_cases/create_user_use_case.dart';
+import 'package:school_sync/domain/use_cases/fetch_user_use_case.dart';
+import 'package:school_sync/domain/use_cases/login_use_case.dart';
+import 'package:school_sync/domain/use_cases/register_use_case.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:universal_io/io.dart' as io;
 
@@ -15,6 +20,8 @@ import 'presentation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load();
 
   final NavigatorObserver navigationObserver = NavigatorObserver();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -28,8 +35,8 @@ Future<void> main() async {
   );
 
   await Supabase.initialize(
-    url: 'https://pcozywgugzelmioovzkp.supabase.co',
-    anonKey: '',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
 
   final SupabaseClient supabase = Supabase.instance.client;
@@ -60,12 +67,16 @@ Future<void> main() async {
     /// Repositories.
     ..set(supabase)
     ..set(repository.auth)
+    ..set(repository.users)
 
     /// UseCases.
-    ..factory((RegistryFactory di) => CreateUserUseCase(auth: di()))
+    ..factory((RegistryFactory di) => RegisterUseCase(auth: di()))
+    ..factory((RegistryFactory di) => LoginUseCase(auth: di()))
+    ..factory((RegistryFactory di) => CreateUserUseCase(users: di()))
+    ..factory((RegistryFactory di) => FetchUserUseCase(users: di()))
 
-        /// Repositories.
-        .set(kDebugMode);
+    /// Repositories.
+    ..set(kDebugMode);
 
   runApp(
     ProviderScope(
@@ -98,10 +109,11 @@ class _ReporterClient implements ReporterClient {
   final Set<_ReporterErrorEvent> _events = <_ReporterErrorEvent>{};
 
   @override
-  async.FutureOr<void> report(
-      {required StackTrace stackTrace,
-      required Object error,
-      Object? extra}) async {
+  async.FutureOr<void> report({
+    required StackTrace stackTrace,
+    required Object error,
+    Object? extra,
+  }) async {
     _events.add(
       (
         error: error,
@@ -133,7 +145,9 @@ typedef _ReporterErrorEvent = ({
 
 class _Repository {
   _Repository.local(Database db, SupabaseClient supabase)
-      : auth = AuthRemoteImpl(supabase);
+      : auth = AuthRemoteImpl(supabase),
+        users = UsersLocalImpl(db);
 
   final AuthRepository auth;
+  final UsersRepository users;
 }

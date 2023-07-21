@@ -4,14 +4,20 @@ part of 'database.dart';
 class UsersDao extends DatabaseAccessor<Database> with _$UsersDaoMixin {
   UsersDao(super.db);
 
-  Future<UserEntity> createUser(AccountEntity account) async => into(users)
-      .insertReturning(
-        UsersCompanion.insert(
-          id: DBValue(account.email),
-          createdAt: clock.now(),
-        ),
-      )
-      .then(_mapUserDataModel);
+  Future<UserEntity> createUser(String id, AccountEntity account) async =>
+      into(users)
+          .insertReturning(
+            UsersCompanion.insert(
+              id: DBValue(id),
+              createdAt: clock.now(),
+              updatedAt: DBValue(clock.now()),
+              firstName: account.firstName!,
+              lastName: account.lastName!,
+              phoneNumber: account.phoneNumber!,
+              email: account.email,
+            ),
+          )
+          .then(_mapUserDataModel);
 
   Future<UserEntity?> getSingleUser(String id) async =>
       (select(users)..where((_) => _.id.equals(id)))

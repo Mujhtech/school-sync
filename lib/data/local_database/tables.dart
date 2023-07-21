@@ -8,7 +8,15 @@ typedef DBJoin = Join<HasResultSet, Object?>;
 
 @DataClassName('UserDataModel')
 class Users extends Table
-    with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey, _DeletedAtKey {}
+    with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey, _DeletedAtKey {
+  TextColumn get email => text()();
+
+  TextColumn get firstName => text()();
+
+  TextColumn get lastName => text()();
+
+  TextColumn get phoneNumber => text()();
+}
 
 // @DataClassName('AccountDataModel')
 // class Accounts extends Table with _UniquePrimaryKey {}

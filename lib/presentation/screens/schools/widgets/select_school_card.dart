@@ -8,9 +8,9 @@ class SelectSchoolCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const CircleAvatar(
+        CircleAvatar(
           radius: 50,
-          backgroundColor: Colors.black,
+          backgroundColor: context.theme.cardColor,
         ),
         Text(
           'Al-Azau Primary School',

@@ -11,24 +11,18 @@ class AuthRemoteImpl implements AuthRepository {
   final SupabaseClient _client;
 
   @override
-  Future<String> signin({
+  Future<AuthResponse> signin({
     required String password,
     required String email,
   }) async {
-    final AuthResponse auth =
-        await _client.auth.signInWithPassword(password: password, email: email);
-
-    return auth.user?.id ?? '';
+    return _client.auth.signInWithPassword(password: password, email: email);
   }
 
   @override
-  Future<String> signup({
+  Future<AuthResponse> signup({
     required String password,
     required String email,
   }) async {
-    final AuthResponse auth =
-        await _client.auth.signUp(password: password, email: email);
-
-    return auth.user?.id ?? '';
+    return _client.auth.signUp(password: password, email: email);
   }
 }
