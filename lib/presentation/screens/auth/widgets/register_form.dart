@@ -14,6 +14,7 @@ class _RegisterFormState extends State<RegisterForm> {
       TextEditingController(text: '');
   late final TextEditingController _passwordController =
       TextEditingController(text: '');
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,24 @@ class _RegisterFormState extends State<RegisterForm> {
             textInputAction: TextInputAction.next,
           ),
           const Height10(),
-          PrimaryTextFormField(
+          PrimaryTextFormField.password(
+            context: context,
+            onTap: () {
+              isPasswordVisible = !isPasswordVisible;
+              setState(() {});
+
+              return isPasswordVisible;
+            },
+            isVisible: isPasswordVisible,
             controller: _passwordController,
-            hint: 'Password',
-            textCapitalization: TextCapitalization.words,
-            textInputAction: TextInputAction.next,
           ),
           const Height10(),
-          PrimaryButton(label: 'Login', onPressed: () {})
+          PrimaryButton(
+            label: 'Login',
+            onPressed: () {
+              context.router.goToSelectSchool();
+            },
+          )
         ],
       ),
     );

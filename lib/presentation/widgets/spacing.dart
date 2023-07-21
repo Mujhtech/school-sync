@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Height3 extends StatelessWidget {
-  const Height3({Key? key}) : super(key: key);
+  const Height3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class Height3 extends StatelessWidget {
 }
 
 class Height5 extends StatelessWidget {
-  const Height5({Key? key}) : super(key: key);
+  const Height5({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class Height5 extends StatelessWidget {
 }
 
 class Height10 extends StatelessWidget {
-  const Height10({Key? key}) : super(key: key);
+  const Height10({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class Height10 extends StatelessWidget {
 }
 
 class Height15 extends StatelessWidget {
-  const Height15({Key? key}) : super(key: key);
+  const Height15({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Height15 extends StatelessWidget {
 }
 
 class Height20 extends StatelessWidget {
-  const Height20({Key? key}) : super(key: key);
+  const Height20({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class Height20 extends StatelessWidget {
 }
 
 class Height30 extends StatelessWidget {
-  const Height30({Key? key}) : super(key: key);
+  const Height30({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +55,8 @@ class Height30 extends StatelessWidget {
 }
 
 class CustomHeight extends StatelessWidget {
+  const CustomHeight({super.key, this.height = 30});
   final double height;
-  const CustomHeight({Key? key, this.height = 30}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class CustomHeight extends StatelessWidget {
 
 // Width Spacers
 class Width3 extends StatelessWidget {
-  const Width3({Key? key}) : super(key: key);
+  const Width3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class Width3 extends StatelessWidget {
 }
 
 class Width5 extends StatelessWidget {
-  const Width5({Key? key}) : super(key: key);
+  const Width5({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class Width5 extends StatelessWidget {
 }
 
 class Width10 extends StatelessWidget {
-  const Width10({Key? key}) : super(key: key);
+  const Width10({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class Width10 extends StatelessWidget {
 }
 
 class Width15 extends StatelessWidget {
-  const Width15({Key? key}) : super(key: key);
+  const Width15({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class Width15 extends StatelessWidget {
 }
 
 class Width20 extends StatelessWidget {
-  const Width20({Key? key}) : super(key: key);
+  const Width20({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +111,8 @@ class Width20 extends StatelessWidget {
 }
 
 class CustomWidth extends StatelessWidget {
+  const CustomWidth({super.key, this.width = 30});
   final double width;
-  const CustomWidth({Key? key, this.width = 30}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

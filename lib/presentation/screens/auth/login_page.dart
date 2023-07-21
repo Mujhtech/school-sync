@@ -17,20 +17,27 @@ class _LoginPageState extends State<LoginPage> {
         child: SizedBox(
           width: context.screenWidth(0.28),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text(
+                AppString.hi,
+                style: context.textTheme.titleSmall,
+              ),
+              const Height10(),
               Text(
                 'Login to continue',
                 style: context.textTheme.titleMedium,
               ),
-              const Height10(),
+              const Height20(),
               const LoginForm(),
               const Height20(),
               const Height20(),
-              Text(
-                '© School Sync.',
-                style: context.textTheme.titleSmall,
+              Center(
+                child: Text(
+                  AppString.appCopyright,
+                  style: context.textTheme.titleSmall,
+                ),
               ),
             ],
           ),

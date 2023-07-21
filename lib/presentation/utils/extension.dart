@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:school_sync/presentation.dart';
 
 extension ContextExtensions on BuildContext {
   double screenWidth([double value = 1]) =>
       MediaQuery.of(this).size.width * value;
   double screenHeight([double value = 1]) =>
       MediaQuery.of(this).size.height * value;
+
+  AppRouter get router => AppRouter(this);
 
   TextTheme get textTheme => Theme.of(this).textTheme;
 

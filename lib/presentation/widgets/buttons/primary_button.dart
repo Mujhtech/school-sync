@@ -6,6 +6,21 @@ import 'package:school_sync/presentation/widgets/loading_spinner.dart';
 enum IconPosition { left, right }
 
 class PrimaryButton extends StatefulWidget {
+  const PrimaryButton({
+    super.key,
+    required this.onPressed,
+    required this.label,
+    this.disable = false,
+    this.buttonColor,
+    this.textColor,
+    this.width,
+    this.height = 50,
+    this.loading = false,
+    this.icon,
+    this.iconPosition = IconPosition.right,
+    this.radius = 10,
+    this.borderColor = Colors.transparent,
+  });
   final VoidCallback onPressed;
   final bool loading;
   final bool disable;
@@ -18,21 +33,6 @@ class PrimaryButton extends StatefulWidget {
   final double radius;
   final Color borderColor;
   final IconPosition? iconPosition;
-  const PrimaryButton(
-      {Key? key,
-      required this.onPressed,
-      required this.label,
-      this.disable = false,
-      this.buttonColor,
-      this.textColor,
-      this.width,
-      this.height = 50,
-      this.loading = false,
-      this.icon,
-      this.iconPosition = IconPosition.right,
-      this.radius = 10,
-      this.borderColor = Colors.transparent})
-      : super(key: key);
 
   @override
   State<PrimaryButton> createState() => _PrimaryButtonState();
@@ -42,7 +42,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   bool loading = false;
   bool disable = false;
 
-  init() {
+  void init() {
     loading = widget.loading;
     disable = widget.disable;
     setState(() {});
@@ -77,41 +77,45 @@ class _PrimaryButtonState extends State<PrimaryButton> {
       color: widget.buttonColor ??
           Colors.black.withOpacity(disable == true ? 0.3 : 1),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(widget.radius),
-          side: BorderSide(
-              color: widget.borderColor, width: 1, style: BorderStyle.solid)),
+        borderRadius: BorderRadius.circular(widget.radius),
+        side: BorderSide(color: widget.borderColor),
+      ),
       child: Container(
-        width: widget.width ?? context.screenWidth(1),
+        width: widget.width ?? context.screenWidth(),
         height: widget.height,
         alignment: Alignment.center,
         child: loading
             ? Center(
                 child: SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: LoadingSpinner.circle(
-                      strokeWidth: 2,
-                      size: 10,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white
-                          : Colors.black,
-                    )),
+                  height: 20,
+                  width: 20,
+                  child: LoadingSpinner.circle(
+                    strokeWidth: 2,
+                    size: 10,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
               )
             : widget.icon != null
                 ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (widget.iconPosition == IconPosition.left) ...[
+                    children: <Widget>[
+                      if (widget.iconPosition == IconPosition.left) ...<Widget>[
                         widget.icon!,
                         const SizedBox(
                           width: 10,
                         ),
                       ],
-                      Text(widget.label,
-                          style: context.textTheme.titleSmall!.copyWith(
-                              color: widget.textColor ?? Colors.white)),
-                      if (widget.iconPosition == IconPosition.right) ...[
+                      Text(
+                        widget.label,
+                        style: context.textTheme.titleSmall!.copyWith(
+                          color: widget.textColor ?? Colors.white,
+                        ),
+                      ),
+                      if (widget.iconPosition ==
+                          IconPosition.right) ...<Widget>[
                         const SizedBox(
                           width: 10,
                         ),
@@ -119,9 +123,11 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                       ]
                     ],
                   )
-                : Text(widget.label,
+                : Text(
+                    widget.label,
                     style: context.textTheme.titleSmall!
-                        .copyWith(color: widget.textColor ?? Colors.white)),
+                        .copyWith(color: widget.textColor ?? Colors.white),
+                  ),
       ),
     );
   }

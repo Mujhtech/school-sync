@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:school_sync/presentation.dart';
+import 'package:tabler_icons/tabler_icons.dart';
 
 class PrimaryTextFormField extends StatelessWidget {
+  const PrimaryTextFormField({
+    this.hasTitle = false,
+    this.controller,
+    this.title,
+    this.hint,
+    this.prefix,
+    this.initialValue,
+    this.suffixIcon,
+    this.validator,
+    this.onChanged,
+    this.onSaved,
+    this.autofillHints,
+    this.prefixIcon,
+    this.textAlign = TextAlign.start,
+    this.inputFormatters,
+    this.keyboardType = TextInputType.text,
+    this.readOnly = false,
+    this.filled = true,
+    this.obscure = false,
+    this.autocorrect = false,
+    this.alignedColumn = CrossAxisAlignment.start,
+    this.radius = 10,
+    this.autofocus = false,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    super.key,
+  }) : assert(initialValue == null || controller == null);
   final bool hasTitle;
   final bool readOnly;
   final bool obscure;
@@ -27,41 +55,37 @@ class PrimaryTextFormField extends StatelessWidget {
   final List<String>? autofillHints;
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
-  const PrimaryTextFormField(
-      {this.hasTitle = false,
-      this.controller,
-      this.title,
-      this.hint,
-      this.prefix,
-      this.initialValue,
-      this.suffixIcon,
-      this.validator,
-      this.onChanged,
-      this.onSaved,
-      this.autofillHints,
-      this.prefixIcon,
-      this.textAlign = TextAlign.start,
-      this.inputFormatters,
-      this.keyboardType = TextInputType.text,
-      this.readOnly = false,
-      this.filled = true,
-      this.obscure = false,
-      this.autocorrect = false,
-      this.alignedColumn = CrossAxisAlignment.start,
-      this.radius = 10,
-      this.autofocus = false,
-      this.textInputAction,
-      this.textCapitalization = TextCapitalization.none,
-      super.key})
-      : assert(initialValue == null || controller == null);
+
+  static PrimaryTextFormField password({
+    required bool Function() onTap,
+    required bool isVisible,
+    required TextEditingController? controller,
+    required BuildContext context,
+  }) =>
+      PrimaryTextFormField(
+        hint: 'Password',
+        controller: controller,
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.next,
+        suffixIcon: GestureDetector(
+          onTap: () => onTap.call(),
+          onLongPress: () => onTap.call(),
+          onLongPressUp: () => onTap.call(),
+          child: Icon(
+            isVisible ? TablerIcons.eye_off : TablerIcons.eye,
+            color: Theme.of(context).iconTheme.color!.withOpacity(0.3),
+          ),
+        ),
+        obscure: !isVisible,
+      );
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: alignedColumn,
-      children: [
-        if (hasTitle) ...[
-          Text(title!, style: Theme.of(context).textTheme.headlineSmall!),
+      children: <Widget>[
+        if (hasTitle) ...<Widget>[
+          Text(title!, style: Theme.of(context).textTheme.headlineSmall),
           const Height10()
         ],
         TextFormField(
@@ -85,22 +109,29 @@ class PrimaryTextFormField extends StatelessWidget {
             contentPadding: const EdgeInsets.all(10),
             prefix: prefix,
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: context.textColor.withOpacity(0.2), width: 1.5),
-                borderRadius: BorderRadius.all(Radius.circular(radius))),
+              borderSide: BorderSide(
+                color: context.textColor.withOpacity(0.2),
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
+            ),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: context.textColor, width: 1.5),
-                borderRadius: BorderRadius.all(Radius.circular(radius))),
+              borderSide: BorderSide(color: context.textColor, width: 1.5),
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
+            ),
             focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: context.textColor, width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(radius))),
+              borderSide: BorderSide(color: context.textColor),
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
+            ),
             filled: filled,
             hintText: hint,
             hintStyle: context.textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).iconTheme.color!.withOpacity(0.5)),
+              color: Theme.of(context).iconTheme.color!.withOpacity(0.5),
+            ),
             errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: context.textColor, width: 1.5),
-                borderRadius: BorderRadius.all(Radius.circular(radius))),
+              borderSide: BorderSide(color: context.textColor, width: 1.5),
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
+            ),
             errorStyle: Theme.of(context)
                 .textTheme
                 .titleMedium!

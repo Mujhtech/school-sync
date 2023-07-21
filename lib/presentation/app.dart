@@ -29,7 +29,7 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         theme: themeBuilder(ThemeData.light()),
         darkTheme: themeBuilder(ThemeData.dark()),
-        themeMode: ThemeMode.system,
+        // themeMode: ThemeMode.system,
         navigatorKey: widget.navigatorKey,
         home: child,
         navigatorObservers: widget.navigatorObservers ?? <NavigatorObserver>[],

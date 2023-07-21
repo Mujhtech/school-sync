@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingSpinner extends StatelessWidget {
-  LoadingSpinner.circle(
-      {super.key, double size = 32, double strokeWidth = 4, this.color})
-      : size = Size.square(size),
+  LoadingSpinner.circle({
+    super.key,
+    double size = 32,
+    double strokeWidth = 4,
+    this.color,
+  })  : size = Size.square(size),
         child = Platform.isMacOS || Platform.isIOS
             ? CupertinoActivityIndicator(
                 color: color,
