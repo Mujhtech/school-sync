@@ -3,6 +3,8 @@ export 'presentation/constant.dart';
 export 'presentation/routing/router.dart';
 export 'presentation/screen.dart';
 export 'presentation/screens/schools/select_school_page.dart';
+export 'presentation/states/app_version_provider.dart';
+export 'presentation/states/registry_provider.dart';
 export 'presentation/theme.dart';
 export 'presentation/util.dart';
 export 'presentation/widget.dart';

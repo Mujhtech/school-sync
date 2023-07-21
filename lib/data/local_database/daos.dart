@@ -5,8 +5,12 @@ class UsersDao extends DatabaseAccessor<Database> with _$UsersDaoMixin {
   UsersDao(super.db);
 
   Future<UserEntity> createUser(AccountEntity account) async => into(users)
-      .insertReturning(UsersCompanion.insert(
-          id: DBValue(account.id), createdAt: clock.now()))
+      .insertReturning(
+        UsersCompanion.insert(
+          id: DBValue(account.email),
+          createdAt: clock.now(),
+        ),
+      )
       .then(_mapUserDataModel);
 
   Future<UserEntity?> getSingleUser(String id) async =>

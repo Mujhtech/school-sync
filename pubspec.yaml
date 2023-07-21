@@ -30,6 +30,7 @@ dependencies:
   rxdart: ^0.27.7
   shared_preferences: ^2.2.0
   sqlite3_flutter_libs: ^0.5.15
+  supabase_flutter: ^1.10.9
   tabler_icons: ^2.5.0+1
   universal_io: ^2.2.2
   url_launcher: ^6.1.12

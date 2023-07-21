@@ -45,3 +45,10 @@ app.*.map.json
 
 # Environment variable file
 .env
+
+/lib/generated
+/coverage
+
+*.g.dart
+
+.last_build_id

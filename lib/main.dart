@@ -2,10 +2,15 @@ import 'dart:async' as async;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:registry/registry.dart';
+import 'package:school_sync/domain/use_cases/create_user_use_case.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:universal_io/io.dart' as io;
 
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'core.dart';
+import 'data.dart';
+import 'domain.dart';
 import 'presentation.dart';
 
 Future<void> main() async {
@@ -20,6 +25,19 @@ Future<void> main() async {
   final _ReporterClient reporterClient = _ReporterClient(
     deviceInformation: deviceInformation,
     isReleased: kDebugMode,
+  );
+
+  await Supabase.initialize(
+    url: 'https://pcozywgugzelmioovzkp.supabase.co',
+    anonKey: '',
+  );
+
+  final SupabaseClient supabase = Supabase.instance.client;
+
+  final _Repository repository = _Repository.local(
+    Database.memory(),
+    supabase,
+    //preferences: PreferencesLocalImpl(themeModeStorage),
   );
 
   final ErrorReporter errorReporter = ErrorReporter(client: reporterClient);
@@ -37,9 +55,24 @@ Future<void> main() async {
     onLog: (Object? message) => debugPrint(message?.toString()),
   );
 
+  final Registry registry = Registry()
+
+    /// Repositories.
+    ..set(supabase)
+    ..set(repository.auth)
+
+    /// UseCases.
+    ..factory((RegistryFactory di) => CreateUserUseCase(auth: di()))
+
+        /// Repositories.
+        .set(kDebugMode);
+
   runApp(
     ProviderScope(
-      overrides: const <Override>[],
+      overrides: <Override>[
+        registryProvider.overrideWithValue(registry),
+        appVersionProvider.overrideWithValue(deviceInformation.appVersion),
+      ],
       child: ErrorBoundary(
         isReleaseMode: kDebugMode,
         errorViewBuilder: (_) => const AppCrashErrorView(),
@@ -97,3 +130,10 @@ typedef _ReporterErrorEvent = ({
   Map<String, String> deviceInformation,
   Map<String, dynamic>? extra,
 });
+
+class _Repository {
+  _Repository.local(Database db, SupabaseClient supabase)
+      : auth = AuthRemoteImpl(supabase);
+
+  final AuthRepository auth;
+}
