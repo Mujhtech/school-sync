@@ -67,6 +67,12 @@ class PrimaryTextFormField extends StatelessWidget {
         controller: controller,
         textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.next,
+        validator: (String? p0) {
+          if (p0 == null || p0.isEmpty) {
+            return 'Field is required';
+          }
+          return null;
+        },
         suffixIcon: GestureDetector(
           onTap: () => onTap.call(),
           onLongPress: () => onTap.call(),
@@ -134,7 +140,7 @@ class PrimaryTextFormField extends StatelessWidget {
             ),
             errorStyle: Theme.of(context)
                 .textTheme
-                .titleMedium!
+                .bodySmall!
                 .copyWith(fontWeight: FontWeight.normal, color: Colors.red),
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,

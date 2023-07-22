@@ -12,10 +12,10 @@ class AddNewSchoolCard extends StatelessWidget {
         CircleAvatar(
           radius: 50,
           backgroundColor: context.theme.cardColor,
-          child: const Icon(
+          child: Icon(
             TablerIcons.plus,
             size: 30,
-            color: Colors.white,
+            color: context.iconColor,
           ),
         ),
         Text(

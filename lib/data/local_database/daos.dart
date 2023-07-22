@@ -28,103 +28,106 @@ class UsersDao extends DatabaseAccessor<Database> with _$UsersDaoMixin {
       user.toEntity(users.actualTableName);
 }
 
-// @DriftAccessor(tables: <Type>[Accounts])
-// class AccountsDao extends DatabaseAccessor<Database> with _$AccountsDaoMixin {
-//   AccountsDao(super.db);
+@DriftAccessor(tables: <Type>[SyncLogs])
+class SyncLogsDao extends DatabaseAccessor<Database> with _$SyncLogsDaoMixin {
+  SyncLogsDao(super.db);
 
-//   Future<AccountEntity> getOrCreateSingleAccount(String? id) async {
-//     if (id == null) {
-//       return into(accounts)
-//           .insertReturning(AccountsCompanion.insert())
-//           .then((_) => _.toEntity());
-//     }
+  Future<SyncLogEntity> createLog({
+    required String type,
+    required String record,
+    required String? recordId,
+    required String? schoolId,
+    required String? userId,
+  }) async =>
+      into(syncLogs)
+          .insertReturning(
+            SyncLogsCompanion.insert(
+              createdAt: clock.now(),
+              updatedAt: DBValue(clock.now()),
+              type: type,
+              record: record,
+              recordId: DBValue(recordId),
+              userId: DBValue(userId),
+              schoolId: DBValue(schoolId),
+            ),
+          )
+          .then(_mapSyncLogDataModel);
 
-//     return (select(accounts)..where((_) => _.id.equals(id)))
-//         .getSingleOrNull()
-//         .then((AccountDataModel? account) {
-//       if (account == null) {
-//         return getOrCreateSingleAccount(null);
-//       }
-//       return account.toEntity();
-//     });
-//   }
-// }
+  Future<SyncLogEntity?> getSingleLog(String id) async =>
+      (select(syncLogs)..where((_) => _.id.equals(id)))
+          .map(_mapSyncLogDataModel)
+          .getSingleOrNull();
 
-// @DriftAccessor(tables: <Type>[Budgets])
-// class BudgetsDao extends DatabaseAccessor<Database> with _$BudgetsDaoMixin {
-//   BudgetsDao(super.db);
+  SyncLogEntity _mapSyncLogDataModel(SyncLogDataModel log) =>
+      log.toEntity(syncLogs.actualTableName);
+}
 
-//   Stream<BudgetEntity?> watchActiveBudget() => (select(budgets)
-//         ..where((_) => _.active.equals(true))
-//         ..limit(1))
-//       .map((_) => _.toEntity(budgets.actualTableName))
-//       .watchSingleOrNull();
+@DriftAccessor(tables: <Type>[Schools])
+class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
+  SchoolsDao(super.db);
 
-//   Stream<BudgetEntity> watchSingleBudget(String id) => (select(budgets)
-//         ..where((_) => _.id.equals(id))
-//         ..limit(1))
-//       .map((_) => _.toEntity(budgets.actualTableName))
-//       .watchSingle();
+  // Stream<SchoolEntity?> watchActiveBudget() => (select(schools)
+  //       ..where((_) => _.active.equals(true))
+  //       ..limit(1))
+  //     .map((_) => _.toEntity(budgets.actualTableName))
+  //     .watchSingleOrNull();
 
-//   Stream<BudgetEntityList> watchAllBudgets() =>
-//       select(budgets).map((_) => _.toEntity(budgets.actualTableName)).watch();
+  Stream<SchoolEntity> watchSingle(String id) => (select(schools)
+        ..where((_) => _.id.equals(id))
+        ..where((_) => _.deletedAt.equalsNullable(null))
+        ..limit(1))
+      .map((_) => _.toEntity(schools.actualTableName))
+      .watchSingle();
 
-//   Future<bool> deleteBudget(String id) async =>
-//       (delete(budgets)..where((_) => _.id.equals(id))).go().then((_) => true);
+  Stream<SchoolEntityList> watchAll(String userId) => (select(schools)
+        ..where((_) => _.userId.equals(userId))
+        ..where((_) => _.deletedAt.equalsNullable(null)))
+      .map((_) => _.toEntity(schools.actualTableName))
+      .watch();
 
-//   Future<bool> activateBudget(String id) async =>
-//       (update(budgets)..where((_) => _.id.equals(id)))
-//           .write(
-//             BudgetsCompanion(
-//               active: const DBValue(true),
-//               updatedAt: DBValue(clock.now()),
-//             ),
-//           )
-//           .then((_) => true);
+  Future<bool> deleteSchool(String id) async =>
+      (update(schools)..where((_) => _.id.equals(id)))
+          .write(
+            SchoolsCompanion(
+              deletedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+  //(delete(schools)..where((_) => _.id.equals(id))).go().then((_) => true);
 
-//   Future<bool> deactivateBudget(String id, DateTime? endedAt) async =>
-//       (update(budgets)..where((_) => _.id.equals(id)))
-//           .write(
-//             BudgetsCompanion(
-//               active: const DBValue(false),
-//               endedAt:
-//                   endedAt != null ? DBValue(endedAt) : const DBValue.absent(),
-//               updatedAt: DBValue(clock.now()),
-//             ),
-//           )
-//           .then((_) => true);
+  Future<bool> updateSchool(UpdateSchooData school) async =>
+      (update(schools)..where((_) => _.id.equals(school.id)))
+          .write(
+            SchoolsCompanion(
+              name: DBValue(school.name),
+              logo: DBValue(school.logo),
+              email: DBValue(school.email),
+              address: DBValue(school.address),
+              acronyms: DBValue(school.acronyms),
+              latitude: DBValue(school.latitude),
+              longitude: DBValue(school.longitude),
+              updatedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
 
-//   Future<bool> updateBudget(UpdateBudgetData budget) async =>
-//       (update(budgets)..where((_) => _.id.equals(budget.id)))
-//           .write(
-//             BudgetsCompanion(
-//               title: DBValue(budget.title),
-//               description: DBValue(budget.description),
-//               amount: DBValue(budget.amount),
-//               active: DBValue(budget.active),
-//               startedAt: DBValue(budget.startedAt),
-//               endedAt: DBValue(budget.endedAt),
-//               updatedAt: DBValue(clock.now()),
-//             ),
-//           )
-//           .then((_) => true);
-
-//   Future<BudgetEntity> createBudget(CreateBudgetData budget) async =>
-//       into(budgets)
-//           .insertReturning(
-//             BudgetsCompanion.insert(
-//               index: budget.index,
-//               title: budget.title,
-//               amount: budget.amount,
-//               description: budget.description,
-//               active: budget.active,
-//               startedAt: budget.startedAt,
-//               endedAt: DBValue(budget.endedAt),
-//               createdAt: clock.now(),
-//             ),
-//           )
-//           .then((_) => _.toEntity(budgets.actualTableName));
-// }
+  Future<SchoolEntity> createSchool(CreateSchooData school) async =>
+      into(schools)
+          .insertReturning(
+            SchoolsCompanion.insert(
+              name: school.name,
+              userId: school.userId,
+              logo: DBValue(school.logo),
+              email: DBValue(school.email),
+              address: DBValue(school.address),
+              acronyms: DBValue(school.acronyms),
+              latitude: DBValue(school.latitude),
+              longitude: DBValue(school.longitude),
+              createdAt: clock.now(),
+            ),
+          )
+          .then((_) => _.toEntity(schools.actualTableName));
+}
 
 // @DriftAccessor(tables: <Type>[BudgetPlans, BudgetCategories])
 // class BudgetPlansDao extends DatabaseAccessor<Database>

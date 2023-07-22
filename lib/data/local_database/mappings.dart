@@ -18,6 +18,39 @@ extension UserEntityExtension on UserDataModel {
       );
 }
 
+extension SyncLogEntityExtension on SyncLogDataModel {
+  SyncLogEntity toEntity(String tableName) => SyncLogEntity(
+        id: id,
+        path: '$tableName/$id',
+        record: record,
+        recordId: recordId,
+        type: type,
+        userId: userId,
+        schoolId: schoolId,
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
+}
+
+extension SchoolEntityExtension on SchoolDataModel {
+  SchoolEntity toEntity(String tableName) => SchoolEntity(
+        id: id,
+        path: '$tableName/$id',
+        userId: userId,
+        name: name,
+        acronyms: acronyms,
+        logo: logo,
+        latitude: latitude,
+        longitude: longitude,
+        email: email ?? '',
+        address: address ?? '',
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
+}
+
 // extension BudgetEntityExtension on BudgetDataModel {
 //   BudgetEntity toEntity(String tableName) {
 //     return BudgetEntity(

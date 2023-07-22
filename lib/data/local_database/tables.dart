@@ -18,6 +18,40 @@ class Users extends Table
   TextColumn get phoneNumber => text()();
 }
 
+@DataClassName('SyncLogDataModel')
+class SyncLogs extends Table
+    with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey, _DeletedAtKey {
+  TextColumn get userId => text().nullable()();
+
+  TextColumn get schoolId => text().nullable()();
+
+  TextColumn get recordId => text().nullable()();
+
+  TextColumn get type => text()();
+
+  TextColumn get record => text()();
+}
+
+@DataClassName('SchoolDataModel')
+class Schools extends Table
+    with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey, _DeletedAtKey {
+  TextColumn get userId => text()();
+
+  TextColumn get logo => text().nullable()();
+
+  TextColumn get email => text().nullable()();
+
+  TextColumn get address => text().nullable()();
+
+  TextColumn get acronyms => text().nullable()();
+
+  RealColumn get latitude => real().nullable()();
+
+  RealColumn get longitude => real().nullable()();
+
+  TextColumn get name => text()();
+}
+
 // @DataClassName('AccountDataModel')
 // class Accounts extends Table with _UniquePrimaryKey {}
 

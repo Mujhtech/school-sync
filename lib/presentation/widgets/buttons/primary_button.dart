@@ -91,9 +91,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                   child: LoadingSpinner.circle(
                     strokeWidth: 2,
                     size: 10,
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black,
+                    color: context.buttonTextColor,
                   ),
                 ),
               )

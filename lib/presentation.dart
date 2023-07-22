@@ -1,10 +1,17 @@
 export 'presentation/app.dart';
 export 'presentation/constant.dart';
+export 'presentation/models/school_view_model.dart';
 export 'presentation/routing/router.dart';
 export 'presentation/screen.dart';
+export 'presentation/screens/dashboard/dashboard_page.dart';
+export 'presentation/screens/schools/create_school_page.dart';
 export 'presentation/screens/schools/select_school_page.dart';
 export 'presentation/states/app_version_provider.dart';
+export 'presentation/states/auth_provider.dart';
+export 'presentation/states/preferences_provider.dart';
 export 'presentation/states/registry_provider.dart';
+export 'presentation/states/schools_provider.dart';
 export 'presentation/theme.dart';
 export 'presentation/util.dart';
 export 'presentation/widget.dart';
+export 'presentation/widgets/error_views.dart';

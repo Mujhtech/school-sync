@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/presentation.dart';
-import 'package:school_sync/presentation/screens/schools/widgets/add_new_school_card.dart';
+import 'package:tabler_icons/tabler_icons.dart';
 
+import 'widgets/add_new_school_card.dart';
 import 'widgets/select_school_card.dart';
 
 class SelectSchoolPage extends StatefulWidget {
@@ -16,61 +18,99 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: context.screenWidth(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Center(
-                  child: Text(
-                    AppString.mySchools,
-                    style: context.textTheme.titleLarge,
-                  ),
-                ),
-              ),
-              const Height20(),
-              SizedBox(
-                height: 200,
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(context).copyWith(
-                    dragDevices: <PointerDeviceKind>{
-                      PointerDeviceKind.touch,
-                      PointerDeviceKind.mouse,
-                    },
-                  ),
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (_, int index) {
-                      if (index == 0) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 40),
-                          child: AddNewSchoolCard(),
-                        );
-                      }
+      body: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) => ref
+            .watch(schoolsProvider)
+            .when(
+              data: (List<SchoolViewModel> data) => Center(
+                child: SizedBox(
+                  width: context.screenWidth(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          AppString.mySchools,
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                      const Height20(),
+                      if (data.isNotEmpty)
+                        SizedBox(
+                          height: 200,
+                          child: ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context).copyWith(
+                              dragDevices: <PointerDeviceKind>{
+                                PointerDeviceKind.touch,
+                                PointerDeviceKind.mouse,
+                              },
+                            ),
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (_, int index) {
+                                if (index == 0) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(left: 40),
+                                    child: AddNewSchoolCard(),
+                                  );
+                                }
 
-                      if (index == 20 - 1) {
-                        return const Padding(
-                          padding: EdgeInsets.only(right: 40),
-                          child: SelectSchoolCard(),
-                        );
-                      }
-                      return const SelectSchoolCard();
-                    },
-                    separatorBuilder: (_, int index) {
-                      return const Width15();
-                    },
-                    itemCount: 20,
+                                final SelectSchoolCard child = SelectSchoolCard(
+                                  school: data[index],
+                                );
+
+                                if (index == 20 - 1) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 40),
+                                    child: child,
+                                  );
+                                }
+                                return child;
+                              },
+                              separatorBuilder: (_, int index) {
+                                return const Width15();
+                              },
+                              itemCount: data.length + 1,
+                            ),
+                          ),
+                        )
+                      else
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Nothing to see here, Let's create your first school",
+                                style: context.textTheme.bodySmall,
+                              ),
+                              const Height15(),
+                              PrimaryButton(
+                                width: 100,
+                                height: 35,
+                                label: "Let's go",
+                                icon: const Icon(
+                                  TablerIcons.plus,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                                iconPosition: IconPosition.left,
+                                onPressed: () {
+                                  context.router.goToDashboard();
+                                },
+                              )
+                            ],
+                          ),
+                        )
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
+              error: ErrorView.new,
+              loading: () => child!,
+            ),
+        child: Container(),
       ),
     );
   }

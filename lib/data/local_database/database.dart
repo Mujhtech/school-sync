@@ -5,6 +5,10 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:meta/meta.dart';
 import 'package:school_sync/domain.dart';
+import 'package:school_sync/domain/entities/create_school_data.dart';
+import 'package:school_sync/domain/entities/school_entity.dart';
+import 'package:school_sync/domain/entities/sync_log_entity.dart';
+import 'package:school_sync/domain/entities/update_school_data.dart';
 import 'package:uuid/uuid.dart';
 
 part 'daos.dart';
@@ -14,24 +18,14 @@ part 'database.g.dart';
 
 @DriftDatabase(
   tables: <Type>[
-    // Accounts,
     Users,
-    // Budgets,
-    // BudgetPlans,
-    // BudgetCategories,
-    // BudgetAllocations,
-    // BudgetMetadataKeys,
-    // BudgetMetadataValues,
-    // BudgetMetadataAssociations,
+    SyncLogs,
+    Schools,
   ],
   daos: <Type>[
-    // AccountsDao,
     UsersDao,
-    // BudgetsDao,
-    // BudgetPlansDao,
-    // BudgetCategoriesDao,
-    // BudgetAllocationsDao,
-    // BudgetMetadataDao,
+    SyncLogsDao,
+    SchoolsDao,
   ],
 )
 class Database extends _$Database {

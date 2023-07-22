@@ -9,6 +9,8 @@ extension ContextExtensions on BuildContext {
 
   AppRouter get router => AppRouter(this);
 
+  AppSnackBar get snackBar => AppSnackBar.of(this);
+
   TextTheme get textTheme => Theme.of(this).textTheme;
 
   Color get textColor {
