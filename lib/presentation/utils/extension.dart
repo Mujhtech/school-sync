@@ -7,6 +7,18 @@ extension ContextExtensions on BuildContext {
   double screenHeight([double value = 1]) =>
       MediaQuery.of(this).size.height * value;
 
+  double get navbarWidth {
+    if (MediaQuery.of(this).size.width > 1350) {
+      return MediaQuery.of(this).size.width * 0.15;
+    }
+
+    if (MediaQuery.of(this).size.width > 900) {
+      return MediaQuery.of(this).size.width * 0.2;
+    }
+
+    return MediaQuery.of(this).size.width * 0.25;
+  }
+
   AppRouter get router => AppRouter(this);
 
   AppSnackBar get snackBar => AppSnackBar.of(this);

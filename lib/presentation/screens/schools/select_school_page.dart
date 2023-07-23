@@ -90,14 +90,14 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
                                 width: 100,
                                 height: 35,
                                 label: "Let's go",
-                                icon: const Icon(
+                                icon: Icon(
                                   TablerIcons.plus,
-                                  color: Colors.white,
+                                  color: context.buttonTextColor,
                                   size: 16,
                                 ),
                                 iconPosition: IconPosition.left,
                                 onPressed: () {
-                                  context.router.goToDashboard();
+                                  context.router.goToCreateSchool();
                                 },
                               )
                             ],

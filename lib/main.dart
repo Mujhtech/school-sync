@@ -55,9 +55,9 @@ Future<void> main() async {
       PreferencesLocalImpl(themeModeStorage);
 
   final _Repository repository = _Repository.local(
-    !kDebugMode
-        ? Database(await _LocalDatabaseUtility.location())
-        : Database.memory(),
+    // !kDebugMode
+    Database(await _LocalDatabaseUtility.location()),
+    // : Database.memory(),
     supabase,
     authIdentityStorage: authIdentityStorage,
     preferences: preferences,
@@ -102,8 +102,6 @@ Future<void> main() async {
 
   final String? userId = await authIdentityStorage.get();
 
-  AppLog.i(userId ?? '');
-
   runApp(
     ProviderScope(
       overrides: <Override>[
@@ -111,7 +109,6 @@ Future<void> main() async {
         appVersionProvider.overrideWithValue(deviceInformation.appVersion),
       ],
       child: ErrorBoundary(
-        isReleaseMode: kDebugMode,
         errorViewBuilder: (_) => const AppCrashErrorView(),
         onException: AppLog.e,
         onCrash: errorReporter.reportCrash,

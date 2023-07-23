@@ -12,8 +12,7 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.screenWidth(0.25),
-      //height: context.screenWidth(),
+      width: context.navbarWidth,
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

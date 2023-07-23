@@ -19,7 +19,7 @@ class FetchUserUseCase {
         throw 'Login to continue';
       }
 
-      return _users.fetch(id);
+      return await _users.fetch(id);
     } catch (error, stackTrace) {
       AppLog.e(error, stackTrace);
       return null;

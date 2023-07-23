@@ -31,7 +31,12 @@ part 'database.g.dart';
 class Database extends _$Database {
   Database(String path)
       : super(
-          LazyDatabase(() => NativeDatabase.createInBackground(File(path))),
+          LazyDatabase(
+            () => NativeDatabase.createInBackground(
+              File(path),
+              logStatements: true,
+            ),
+          ),
         );
 
   Database.memory() : super(NativeDatabase.memory(logStatements: true));
