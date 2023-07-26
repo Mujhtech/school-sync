@@ -102,6 +102,7 @@ class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
               name: DBValue(school.name),
               logo: DBValue(school.logo),
               email: DBValue(school.email),
+              schoolType: DBValue(school.schoolType),
               address: DBValue(school.address),
               acronyms: DBValue(school.acronyms),
               latitude: DBValue(school.latitude),
@@ -117,6 +118,7 @@ class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
             SchoolsCompanion.insert(
               name: school.name,
               userId: school.userId,
+              schoolType: school.schoolType,
               logo: DBValue(school.logo),
               email: DBValue(school.email),
               address: DBValue(school.address),

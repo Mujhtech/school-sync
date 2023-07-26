@@ -49,6 +49,8 @@ class Schools extends Table
 
   RealColumn get longitude => real().nullable()();
 
+  TextColumn get schoolType => text()();
+
   TextColumn get name => text()();
 }
 

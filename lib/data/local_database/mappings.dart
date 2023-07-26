@@ -44,6 +44,7 @@ extension SchoolEntityExtension on SchoolDataModel {
         latitude: latitude,
         longitude: longitude,
         email: email ?? '',
+        schoolType: schoolType,
         address: address ?? '',
         createdAt: createdAt,
         updatedAt: updatedAt ?? DateTime.now(),

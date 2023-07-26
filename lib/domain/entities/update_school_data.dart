@@ -10,6 +10,7 @@ class UpdateSchooData with EquatableMixin {
     required this.address,
     required this.latitude,
     required this.longitude,
+    required this.schoolType,
   });
 
   final String id;
@@ -18,6 +19,7 @@ class UpdateSchooData with EquatableMixin {
   final String? logo;
   final double? longitude;
   final double? latitude;
+  final String schoolType;
   final String email;
   final String address;
 
@@ -27,6 +29,7 @@ class UpdateSchooData with EquatableMixin {
         name,
         logo,
         acronyms,
+        schoolType,
         latitude,
         longitude,
         email,

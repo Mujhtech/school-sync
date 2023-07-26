@@ -7,6 +7,7 @@ class CreateSchooData with EquatableMixin {
     required this.email,
     required this.logo,
     required this.acronyms,
+    required this.schoolType,
     required this.address,
     required this.latitude,
     required this.longitude,
@@ -14,7 +15,7 @@ class CreateSchooData with EquatableMixin {
 
   final String userId;
   final String name;
-
+  final String schoolType;
   final String? acronyms;
   final String? logo;
   final double? longitude;
@@ -28,6 +29,7 @@ class CreateSchooData with EquatableMixin {
         name,
         logo,
         acronyms,
+        schoolType,
         latitude,
         longitude,
         email,

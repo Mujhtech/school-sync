@@ -9,6 +9,7 @@ class SchoolEntity with EquatableMixin {
     required this.email,
     required this.logo,
     required this.acronyms,
+    required this.schoolType,
     required this.address,
     required this.latitude,
     required this.longitude,
@@ -21,6 +22,7 @@ class SchoolEntity with EquatableMixin {
   final String path;
   final String userId;
   final String name;
+  final String schoolType;
   final String? acronyms;
   final String? logo;
   final double? longitude;
@@ -38,6 +40,7 @@ class SchoolEntity with EquatableMixin {
         userId,
         name,
         logo,
+        schoolType,
         acronyms,
         latitude,
         longitude,
