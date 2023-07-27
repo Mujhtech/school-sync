@@ -58,10 +58,10 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
                                 }
 
                                 final SelectSchoolCard child = SelectSchoolCard(
-                                  school: data[index],
+                                  school: data[index - 1],
                                 );
 
-                                if (index == 20 - 1) {
+                                if ((index - 1) == data.length - 1) {
                                   return Padding(
                                     padding: const EdgeInsets.only(right: 40),
                                     child: child,

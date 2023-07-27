@@ -4,5 +4,5 @@ import '../entities/user_entity.dart';
 abstract class UsersRepository {
   Future<UserEntity> create(String id, AccountEntity account);
 
-  Future<UserEntity?> fetch(String uid);
+  Future<UserEntity> fetch(String uid);
 }

@@ -5,10 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:meta/meta.dart';
 import 'package:school_sync/domain.dart';
-import 'package:school_sync/domain/entities/create_school_data.dart';
-import 'package:school_sync/domain/entities/school_entity.dart';
 import 'package:school_sync/domain/entities/sync_log_entity.dart';
-import 'package:school_sync/domain/entities/update_school_data.dart';
 import 'package:uuid/uuid.dart';
 
 part 'daos.dart';
@@ -42,7 +39,7 @@ class Database extends _$Database {
   Database.memory() : super(NativeDatabase.memory(logStatements: true));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -50,8 +47,9 @@ class Database extends _$Database {
             customStatement('PRAGMA foreign_keys = ON'),
         onCreate: (Migrator m) async => m.createAll(),
         onUpgrade: (Migrator m, int from, int to) async {
-          if (from < 2) {
+          if (from < 4) {
             await Future.wait(<Future<void>>[
+              m.addColumn(schools, schools.schoolType)
               // m.createTable(budgetMetadataKeys),
               // m.createTable(budgetMetadataValues),
               // m.createTable(budgetMetadataAssociations),

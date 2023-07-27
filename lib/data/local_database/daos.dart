@@ -112,10 +112,13 @@ class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
           )
           .then((_) => true);
 
-  Future<SchoolEntity> createSchool(CreateSchooData school) async =>
+  Future<SchoolEntity> createSchool(CreateSchoolData school) async =>
       into(schools)
           .insertReturning(
             SchoolsCompanion.insert(
+              id: school.id != null
+                  ? DBValue(school.id!)
+                  : const DBValue.absent(),
               name: school.name,
               userId: school.userId,
               schoolType: school.schoolType,

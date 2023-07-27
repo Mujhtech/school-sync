@@ -1,7 +1,4 @@
 import 'package:school_sync/domain.dart';
-import 'package:school_sync/domain/entities/create_school_data.dart';
-import 'package:school_sync/domain/entities/school_entity.dart';
-import 'package:school_sync/domain/entities/update_school_data.dart';
 
 import '../../local_database.dart';
 
@@ -11,7 +8,7 @@ class SchoolsLocalImpl implements SchoolsRepository {
   final Database _db;
 
   @override
-  Future<ReferenceEntity> create(String userId, CreateSchooData school) =>
+  Future<ReferenceEntity> create(CreateSchoolData school) =>
       _db.schoolsDao.createSchool(school).then((_) => (id: _.id, path: _.path));
 
   @override

@@ -17,9 +17,12 @@ class SelectSchoolCard extends StatelessWidget {
             radius: 50,
             backgroundColor: context.theme.cardColor,
           ),
-          Text(
-            school.name,
-            style: context.textTheme.titleSmall,
+          Expanded(
+            child: Text(
+              school.name,
+              overflow: TextOverflow.ellipsis,
+              style: context.textTheme.titleSmall,
+            ),
           )
         ],
       ),

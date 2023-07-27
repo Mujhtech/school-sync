@@ -11,7 +11,7 @@ class FetchUserUseCase {
   final UsersRepository _users;
   final AuthRepository _auth;
 
-  Future<UserEntity?> call() async {
+  Future<UserEntity> call() async {
     try {
       final String? id = await _auth.getCurrentUserId();
 
@@ -22,7 +22,7 @@ class FetchUserUseCase {
       return await _users.fetch(id);
     } catch (error, stackTrace) {
       AppLog.e(error, stackTrace);
-      return null;
+      rethrow;
     }
   }
 }

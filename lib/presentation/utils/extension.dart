@@ -63,3 +63,13 @@ extension StringExtensions on String {
 
   String sentence() => split(' ').map((_) => _.capitalize()).join(' ');
 }
+
+extension PricingRecurrenceExtensions on PricingRecurrence {
+  int get months {
+    if (this == PricingRecurrence.yearly) {
+      return 12;
+    }
+
+    return 1;
+  }
+}

@@ -5,7 +5,7 @@ import 'package:school_sync/domain/entities/update_school_data.dart';
 import '../entities/reference_entity.dart';
 
 abstract class SchoolsRepository {
-  Future<ReferenceEntity> create(String userId, CreateSchooData school);
+  Future<ReferenceEntity> create(CreateSchoolData school);
 
   Future<bool> update(UpdateSchooData school);
 

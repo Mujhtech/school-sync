@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:school_sync/presentation.dart';
 
-import 'widgets/create_school_form.dart';
+class SetupSchoolPage extends StatelessWidget {
+  const SetupSchoolPage({super.key, required this.schoolId});
 
-class CreateSchoolPage extends StatefulWidget {
-  const CreateSchoolPage({super.key});
+  final String schoolId;
 
-  @override
-  State<CreateSchoolPage> createState() => _CreateSchoolPageState();
-}
-
-class _CreateSchoolPageState extends State<CreateSchoolPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +17,7 @@ class _CreateSchoolPageState extends State<CreateSchoolPage> {
             color: context.theme.cardColor,
             borderRadius: AppBorderRadius.xl,
           ),
-          child: const CreateSchoolForm(),
+          child: const SizedBox(),
         ),
       ),
     );

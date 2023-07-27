@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
+import 'package:school_sync/presentation/screens/schools/setup_school_page.dart';
 
 import 'app_routes.dart';
 
@@ -23,6 +24,13 @@ class AppRouter {
 
   Future<void> goToSelectSchool() =>
       _goTo((_) => const SelectSchoolPage(), AppRoutes.selectSchool);
+
+  Future<void> goToSetupSchool(String schoolId) => _goTo(
+        (_) => SetupSchoolPage(
+          schoolId: schoolId,
+        ),
+        AppRoutes.selectSchool,
+      );
 
   Future<T?> _goTo<T>(WidgetBuilder builder, String name) =>
       Navigator.of(_context).push<T>(

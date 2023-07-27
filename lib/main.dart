@@ -63,6 +63,8 @@ Future<void> main() async {
     preferences: preferences,
   );
 
+  final RemoteDatabase remoteDatabase = RemoteDatabase(supabase);
+
   final ErrorReporter errorReporter = ErrorReporter(client: reporterClient);
   AppLog.init(
     logFilter: () => false,
@@ -83,6 +85,7 @@ Future<void> main() async {
     /// Repositories.
     ..set(supabase)
     ..set(storage)
+    ..set(remoteDatabase)
     ..set(repository.auth)
     ..set(repository.users)
     ..set(repository.schools)
@@ -92,6 +95,10 @@ Future<void> main() async {
     ..factory((RegistryFactory di) => RegisterUseCase(auth: di()))
     ..factory((RegistryFactory di) => LoginUseCase(auth: di()))
     ..factory((RegistryFactory di) => CreateUserUseCase(users: di()))
+    ..factory(
+      (RegistryFactory di) =>
+          CreateSchoolUseCase(schools: di(), remoteDatabase: di()),
+    )
     ..factory((RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()))
     ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
     ..factory((RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()))
@@ -181,6 +188,7 @@ class _Repository {
   final AuthRepository auth;
   final UsersRepository users;
   final SchoolsRepository schools;
+
   final PreferencesRepository preferences;
 }
 

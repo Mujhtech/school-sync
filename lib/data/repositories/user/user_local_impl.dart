@@ -12,5 +12,13 @@ class UsersLocalImpl implements UsersRepository {
       _db.usersDao.createUser(id, account);
 
   @override
-  Future<UserEntity?> fetch(String uid) => _db.usersDao.getSingleUser(uid);
+  Future<UserEntity> fetch(String uid) async {
+    final UserEntity? user = await _db.usersDao.getSingleUser(uid);
+
+    if (user == null) {
+      throw 'User not found';
+    }
+
+    return user;
+  }
 }
