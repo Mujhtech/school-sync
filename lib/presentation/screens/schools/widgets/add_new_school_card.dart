@@ -7,22 +7,25 @@ class AddNewSchoolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: context.theme.cardColor,
-          child: Icon(
-            TablerIcons.plus,
-            size: 30,
-            color: context.iconColor,
+    return GestureDetector(
+      onTap: () => context.router.goToCreateSchool(),
+      child: Column(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: context.theme.cardColor,
+            child: Icon(
+              TablerIcons.plus,
+              size: 30,
+              color: context.iconColor,
+            ),
           ),
-        ),
-        Text(
-          'Add new',
-          style: context.textTheme.titleSmall,
-        )
-      ],
+          Text(
+            'Add new',
+            style: context.textTheme.titleSmall,
+          )
+        ],
+      ),
     );
   }
 }
