@@ -22,7 +22,7 @@ class PricingRecurrenceSwitch extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: context.buttonColor.withOpacity(0.05),
+        color: context.theme.colorScheme.background,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

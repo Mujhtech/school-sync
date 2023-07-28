@@ -79,6 +79,13 @@ class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
       .map((_) => _.toEntity(schools.actualTableName))
       .watchSingle();
 
+  Future<SchoolEntity?> getSingle(String id) => (select(schools)
+        ..where((_) => _.id.equals(id))
+        ..where((_) => _.deletedAt.equalsNullable(null))
+        ..limit(1))
+      .map((_) => _.toEntity(schools.actualTableName))
+      .getSingleOrNull();
+
   Stream<SchoolEntityList> watchAll(String userId) => (select(schools)
         ..where((_) => _.userId.equals(userId))
         ..where((_) => _.deletedAt.equalsNullable(null)))

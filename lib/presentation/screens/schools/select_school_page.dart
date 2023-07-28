@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/presentation.dart';
@@ -39,41 +38,47 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
                       if (data.isNotEmpty)
                         SizedBox(
                           height: 200,
-                          child: ScrollConfiguration(
-                            behavior: ScrollConfiguration.of(context).copyWith(
-                              dragDevices: <PointerDeviceKind>{
-                                PointerDeviceKind.touch,
-                                PointerDeviceKind.mouse,
-                              },
-                            ),
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              itemBuilder: (_, int index) {
-                                if (index == 0) {
-                                  return const Padding(
-                                    padding: EdgeInsets.only(left: 40),
-                                    child: AddNewSchoolCard(),
-                                  );
-                                }
-
-                                final SelectSchoolCard child = SelectSchoolCard(
-                                  school: data[index - 1],
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (_, int index) {
+                              if (index == 0) {
+                                return const Padding(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: AddNewSchoolCard(),
                                 );
+                              }
 
-                                if ((index - 1) == data.length - 1) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 40),
-                                    child: child,
-                                  );
-                                }
-                                return child;
-                              },
-                              separatorBuilder: (_, int index) {
-                                return const Width15();
-                              },
-                              itemCount: data.length + 1,
-                            ),
+                              final SchoolViewModel item = data[index - 1];
+
+                              final SelectSchoolCard child = SelectSchoolCard(
+                                onClicked: () {
+                                  ref
+                                      .read(
+                                        currentSelectedSchoolProvider.notifier,
+                                      )
+                                      .changeCurrentSchool(item.id)
+                                      .then((bool value) {
+                                    if (value) {
+                                      context.router.goToDashboard();
+                                    }
+                                  });
+                                },
+                                school: item,
+                              );
+
+                              if ((index - 1) == data.length - 1) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 40),
+                                  child: child,
+                                );
+                              }
+                              return child;
+                            },
+                            separatorBuilder: (_, int index) {
+                              return const Width15();
+                            },
+                            itemCount: data.length + 1,
                           ),
                         )
                       else

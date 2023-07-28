@@ -20,13 +20,16 @@ class SchoolsLocalImpl implements SchoolsRepository {
       _db.schoolsDao.watchAll(userId);
 
   @override
-  Stream<SchoolEntity> fetchOne({
-    required String schoolId,
-    required String userId,
-  }) =>
+  Stream<SchoolEntity> fetchOne(
+    String schoolId,
+  ) =>
       _db.schoolsDao.watchSingle(schoolId);
 
   @override
   Future<bool> update(UpdateSchooData budget) =>
       _db.schoolsDao.updateSchool(budget);
+
+  @override
+  Future<SchoolEntity?> getSingleOrNull(String schoolId) =>
+      _db.schoolsDao.getSingle(schoolId);
 }

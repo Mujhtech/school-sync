@@ -1,5 +1,6 @@
 import 'dart:async' as async;
 
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -54,11 +55,18 @@ Future<void> main() async {
   final PreferencesRepository preferences =
       PreferencesLocalImpl(themeModeStorage);
 
+  final _CurrentSchoolIdStorage currentSchoolIdStorage =
+      _CurrentSchoolIdStorage(storage);
+
+  final CurrentSchoolIdRepository currentSchool =
+      CurrentSchoolIdLocalImpl(currentSchoolIdStorage);
+
   final _Repository repository = _Repository.local(
     // !kDebugMode
     Database(await _LocalDatabaseUtility.location()),
     // : Database.memory(),
     supabase,
+    currentSchool: currentSchool,
     authIdentityStorage: authIdentityStorage,
     preferences: preferences,
   );
@@ -90,19 +98,32 @@ Future<void> main() async {
     ..set(repository.users)
     ..set(repository.schools)
     ..set(repository.preferences)
+    ..set(repository.currentSchool)
 
     /// UseCases.
     ..factory((RegistryFactory di) => RegisterUseCase(auth: di()))
     ..factory((RegistryFactory di) => LoginUseCase(auth: di()))
     ..factory((RegistryFactory di) => CreateUserUseCase(users: di()))
+    ..factory((RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()))
+
+    //
     ..factory(
       (RegistryFactory di) =>
           CreateSchoolUseCase(schools: di(), remoteDatabase: di()),
     )
-    ..factory((RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()))
     ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
+    ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
+    //
     ..factory((RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()))
     ..factory((RegistryFactory di) => FetchAppThemeUseCase(preferences: di()))
+
+    ///
+    ..factory(
+      (RegistryFactory di) => UpdateCurrentSchoolIdUseCase(currentSchool: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => FetchCurrentSchoolIdUseCase(currentSchool: di()),
+    )
 
     /// Repositories.
     ..set(kDebugMode);
@@ -128,6 +149,14 @@ Future<void> main() async {
       ),
     ),
   );
+
+  doWhenWindowReady(() {
+    // const Size initialSize = Size(600, 450);
+    // appWindow.minSize = initialSize;
+    // appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
 }
 
 class _ReporterClient implements ReporterClient {
@@ -181,6 +210,7 @@ class _Repository {
     SupabaseClient supabase, {
     required StringLocalStorage authIdentityStorage,
     required this.preferences,
+    required this.currentSchool,
   })  : auth = AuthRemoteImpl(supabase, authIdentityStorage),
         users = UsersLocalImpl(db),
         schools = SchoolsLocalImpl(db);
@@ -188,7 +218,7 @@ class _Repository {
   final AuthRepository auth;
   final UsersRepository users;
   final SchoolsRepository schools;
-
+  final CurrentSchoolIdRepository currentSchool;
   final PreferencesRepository preferences;
 }
 
@@ -241,6 +271,19 @@ class _ThemeModeStorage implements ThemeModeStorage {
 
   @override
   async.FutureOr<void> set(int themeMode) => _storage.setInt(_key, themeMode);
+}
+
+class _CurrentSchoolIdStorage implements StringLocalStorage {
+  const _CurrentSchoolIdStorage(this._storage);
+
+  final SharedPreferences _storage;
+  static const String _key = 'school.sync.current_school_id';
+
+  @override
+  async.FutureOr<String?> get() => _storage.getString(_key);
+
+  @override
+  async.FutureOr<bool> set(String value) => _storage.setString(_key, value);
 }
 
 extension on int {

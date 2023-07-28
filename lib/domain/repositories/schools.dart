@@ -13,8 +13,11 @@ abstract class SchoolsRepository {
 
   Stream<SchoolEntityList> fetchAll(String userId);
 
-  Stream<SchoolEntity> fetchOne({
-    required String userId,
-    required String schoolId,
-  });
+  Stream<SchoolEntity> fetchOne(
+    String schoolId,
+  );
+
+  Future<SchoolEntity?> getSingleOrNull(
+    String schoolId,
+  );
 }

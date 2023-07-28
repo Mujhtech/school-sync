@@ -3,12 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/core.dart';
 import 'package:school_sync/domain.dart';
 import 'package:school_sync/presentation.dart';
-import 'package:school_sync/presentation/screens/schools/widgets/pricing_type_switch.dart';
-import 'package:school_sync/presentation/states/school_provider.dart';
 import 'package:school_sync/presentation/states/user_provider.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 
 import 'pricing_card.dart';
+import 'pricing_type_switch.dart';
 
 class CreateSchoolForm extends StatefulWidget {
   const CreateSchoolForm({super.key});

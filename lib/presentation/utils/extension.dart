@@ -62,6 +62,10 @@ extension StringExtensions on String {
   }
 
   String sentence() => split(' ').map((_) => _.capitalize()).join(' ');
+
+  String get firstLetter {
+    return this[0];
+  }
 }
 
 extension PricingRecurrenceExtensions on PricingRecurrence {

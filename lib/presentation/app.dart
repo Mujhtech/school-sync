@@ -28,6 +28,7 @@ class _AppState extends State<App> {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) =>
           MaterialApp(
+        scrollBehavior: CustomScrollBehavior(),
         debugShowCheckedModeBanner: false,
         theme: themeBuilder(ThemeData.light()),
         darkTheme: themeBuilder(ThemeData.dark()),

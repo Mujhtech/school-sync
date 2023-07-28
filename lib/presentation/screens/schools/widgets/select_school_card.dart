@@ -3,15 +3,18 @@ import 'package:school_sync/presentation.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 
 class SelectSchoolCard extends StatelessWidget {
-  const SelectSchoolCard({super.key, required this.school});
+  const SelectSchoolCard({
+    super.key,
+    required this.school,
+    required this.onClicked,
+  });
   final SchoolViewModel school;
+  final VoidCallback onClicked;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.router.goToDashboard();
-      },
+      onTap: onClicked,
       child: Column(
         children: <Widget>[
           CircleAvatar(
@@ -23,10 +26,13 @@ class SelectSchoolCard extends StatelessWidget {
               color: context.iconColor,
             ),
           ),
-          Expanded(
+          Container(
+            constraints: BoxConstraints(maxWidth: context.screenWidth(0.1)),
             child: Text(
               school.name,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: context.textTheme.titleSmall,
             ),
           )

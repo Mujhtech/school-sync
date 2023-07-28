@@ -6,6 +6,7 @@ export 'presentation/screen.dart';
 export 'presentation/screens/dashboard/dashboard_page.dart';
 export 'presentation/screens/schools/create_school_page.dart';
 export 'presentation/screens/schools/select_school_page.dart';
+export 'presentation/state.dart';
 export 'presentation/states/app_version_provider.dart';
 export 'presentation/states/auth_provider.dart';
 export 'presentation/states/preferences_provider.dart';

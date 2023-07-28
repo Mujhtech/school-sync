@@ -65,7 +65,7 @@ class Navbar extends StatelessWidget {
                                 radius: 10,
                                 backgroundColor: Colors.red,
                                 child: Text(
-                                  '${user?.firstName.split('')[0]}',
+                                  '${user?.firstName.firstLetter}',
                                   style: context.textTheme.bodySmall!
                                       .copyWith(fontWeight: FontWeight.w700),
                                 ),
@@ -86,33 +86,56 @@ class Navbar extends StatelessWidget {
                         );
                   },
                 ),
-                Row(
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.yellow,
-                      child: Text(
-                        'M',
-                        style: context.textTheme.bodySmall!
-                            .copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    const Width5(),
-                    Column(
-                      children: <Widget>[
-                        Icon(
-                          TablerIcons.chevron_up,
-                          size: 16,
-                          color: context.iconColor!.withOpacity(0.5),
-                        ),
-                        Icon(
-                          TablerIcons.chevron_down,
-                          size: 16,
-                          color: context.iconColor!.withOpacity(0.5),
-                        ),
-                      ],
-                    )
-                  ],
+                Consumer(
+                  builder: (BuildContext context, WidgetRef ref, _) {
+                    return ref.watch(currentSelectedSchoolProvider).when(
+                          data:
+                              (CurrentSelectedSchoolState currentSchoolState) =>
+                                  Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.yellow,
+                                child: currentSchoolState.school != null
+                                    ? Text(
+                                        currentSchoolState.school!.acronyms
+                                                ?.firstLetter ??
+                                            '',
+                                        style: context.textTheme.bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700),
+                                      )
+                                    : Icon(
+                                        TablerIcons.plus,
+                                        size: 30,
+                                        color: context.iconColor,
+                                      ),
+                              ),
+                              const Width5(),
+                              Column(
+                                children: <Widget>[
+                                  Icon(
+                                    TablerIcons.chevron_up,
+                                    size: 16,
+                                    color: context.iconColor!.withOpacity(0.5),
+                                  ),
+                                  Icon(
+                                    TablerIcons.chevron_down,
+                                    size: 16,
+                                    color: context.iconColor!.withOpacity(0.5),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          error: (Object err, StackTrace stackTrace) => Text(
+                            err.toString(),
+                            style: context.textTheme.bodySmall,
+                          ),
+                          // TODO(Mujhtech): Showing skeleton widget
+                          loading: () => const SizedBox.shrink(),
+                        );
+                  },
                 ),
               ],
             ),

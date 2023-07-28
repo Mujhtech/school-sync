@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:school_sync/presentation.dart';
+import 'package:tabler_icons/tabler_icons.dart';
 
 import 'widgets/create_school_form.dart';
 
@@ -15,16 +16,46 @@ class _CreateSchoolPageState extends State<CreateSchoolPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          height: context.screenHeight(0.7),
-          width: context.screenWidth(0.8),
-          decoration: BoxDecoration(
-            color: context.theme.cardColor,
-            borderRadius: AppBorderRadius.xl,
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 30,
+            decoration: BoxDecoration(color: context.cardColor),
+            child: Row(
+              children: <Widget>[
+                CustomWidth(
+                  width: context.screenWidth(0.1),
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: CircleAvatar(
+                    backgroundColor: context.backgroundColor,
+                    radius: 20,
+                    child: Icon(
+                      TablerIcons.arrow_back,
+                      size: 18,
+                      color: context.iconColor,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          child: const CreateSchoolForm(),
-        ),
+          CustomHeight(
+            height: context.screenHeight(0.1),
+          ),
+          Center(
+            child: Container(
+              height: context.screenHeight(0.7),
+              width: context.screenWidth(0.8),
+              decoration: BoxDecoration(
+                color: context.theme.cardColor,
+                borderRadius: AppBorderRadius.xl,
+              ),
+              child: const CreateSchoolForm(),
+            ),
+          ),
+        ],
       ),
     );
   }

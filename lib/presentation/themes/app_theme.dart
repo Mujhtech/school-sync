@@ -111,5 +111,9 @@ extension AppThemeThemeDataExtensions on ThemeData {
 extension BuildContextThemeExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
 
+  Color? get backgroundColor => Theme.of(this).colorScheme.background;
+
+  Color? get cardColor => Theme.of(this).cardColor;
+
   Color? get iconColor => Theme.of(this).iconTheme.color;
 }
