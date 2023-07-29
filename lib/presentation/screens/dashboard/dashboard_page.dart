@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/presentation.dart';
 
-import 'widgets/navbar.dart';
-
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 

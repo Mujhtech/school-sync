@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
 
 import 'package:tabler_icons/tabler_icons.dart';
@@ -11,6 +11,15 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  SyncEnum syncing = SyncEnum.uploading;
+  NavbarMenuEnum _menu = NavbarMenuEnum.setting;
+  NavbarMenuEnum get menu => _menu;
+
+  set menu(NavbarMenuEnum value) {
+    _menu = value;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,97 +36,77 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
                 children: <Widget>[
-                  Text(
-                    'Manage',
-                    style: context.textTheme.titleSmall!
-                        .copyWith(color: context.textColor.withOpacity(0.5)),
-                  ),
-                  HyperLink(
-                    onTap: () => context.router.goBack(),
-                    child: Icon(
-                      TablerIcons.x,
-                      size: 15,
-                      color: context.iconColor!.withOpacity(0.5),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Manage',
+                          style: context.textTheme.titleSmall!.copyWith(
+                            color: context.textColor.withOpacity(0.5),
+                          ),
+                        ),
+                        HyperLink(
+                          onTap: () => context.router.goBack(),
+                          child: CircleAvatar(
+                            backgroundColor: context.backgroundColor,
+                            radius: 10,
+                            child: Icon(
+                              TablerIcons.x,
+                              size: 15,
+                              color: context.iconColor!.withOpacity(0.5),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
+                  ),
+                  const Height10(),
+                  ...settingMenus
+                      .map(
+                        (NavbarMenu e) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            NavLink(
+                              nav: e,
+                              isActive: menu == e.menu,
+                              onClicked: () => menu = e.menu,
+                            ),
+                            const Height5(),
+                          ],
+                        ),
+                      )
+                      .toList(),
                 ],
               ),
-              const Height10(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'My Account',
-                  icon: TablerIcons.user_circle,
-                  menu: NavbarMenuEnum.grade,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Settings',
-                  icon: TablerIcons.settings,
-                  menu: NavbarMenuEnum.grade,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Language',
-                  icon: TablerIcons.language,
-                  menu: NavbarMenuEnum.language,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Add-on',
-                  icon: TablerIcons.package,
-                  menu: NavbarMenuEnum.addon,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Upgrade',
-                  icon: TablerIcons.square_arrow_up,
-                  menu: NavbarMenuEnum.grade,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Import/Export',
-                  icon: TablerIcons.database,
-                  menu: NavbarMenuEnum.import_and_export,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Security',
-                  icon: TablerIcons.key,
-                  menu: NavbarMenuEnum.import_and_export,
-                ),
-                onClicked: () {},
-              ),
-              const Height5(),
-              NavLink(
-                nav: NavbarMenu(
-                  label: 'Member',
-                  icon: TablerIcons.user_x,
-                  menu: NavbarMenuEnum.import_and_export,
-                ),
-                onClicked: () {},
-              ),
+              Column(
+                children: <Widget>[
+                  Icon(
+                    switch (syncing) {
+                      SyncEnum.uploading => TablerIcons.cloud_upload,
+                      SyncEnum.downloading => TablerIcons.cloud_download,
+                      SyncEnum.completed => TablerIcons.cloud_filled,
+                      SyncEnum.connecting => TablerIcons.cloud_data_connection,
+                      SyncEnum.connected => TablerIcons.cloud_computing
+                    },
+                    color: context.iconColor!.withOpacity(0.5),
+                  ),
+                  LinearProgressIndicator(
+                    color: context.iconColor!.withOpacity(0.5),
+                  ),
+                  const Height3(),
+                  Text(
+                    '20 of 100',
+                    style: context.textTheme.bodySmall!
+                        .copyWith(color: context.textColor.withOpacity(0.5)),
+                  )
+                ],
+              )
             ],
           ),
         ),
@@ -131,6 +120,10 @@ class _SettingPageState extends State<SettingPage> {
                 bottomRight: Radius.circular(5),
               ),
             ),
+            child: switch (menu) {
+              NavbarMenuEnum.setting => Container(),
+              _ => const NotFoundPage(),
+            },
           ),
         )
       ],

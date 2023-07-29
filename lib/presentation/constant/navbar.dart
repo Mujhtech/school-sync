@@ -14,7 +14,11 @@ enum NavbarMenuEnum {
   language,
   import_and_export,
   addon,
-  trash
+  trash,
+  member,
+  security,
+  upgrade,
+  account
 }
 
 class NavbarMenu {
@@ -65,5 +69,48 @@ List<NavbarMenu> navbarMenuList = <NavbarMenu>[
     icon: TablerIcons.trash,
     label: 'Trash',
     menu: NavbarMenuEnum.trash,
+  ),
+];
+
+List<NavbarMenu> settingMenus = <NavbarMenu>[
+  NavbarMenu(
+    label: 'My Account',
+    icon: TablerIcons.user_circle,
+    menu: NavbarMenuEnum.grade,
+  ),
+  NavbarMenu(
+    label: 'Language',
+    icon: TablerIcons.language,
+    menu: NavbarMenuEnum.language,
+  ),
+  NavbarMenu(
+    label: 'Member',
+    icon: TablerIcons.user_x,
+    menu: NavbarMenuEnum.member,
+  ),
+  NavbarMenu(
+    label: 'Settings',
+    icon: TablerIcons.settings,
+    menu: NavbarMenuEnum.setting,
+  ),
+  NavbarMenu(
+    label: 'Add-on',
+    icon: TablerIcons.package,
+    menu: NavbarMenuEnum.addon,
+  ),
+  NavbarMenu(
+    label: 'Upgrade',
+    icon: TablerIcons.square_arrow_up,
+    menu: NavbarMenuEnum.upgrade,
+  ),
+  NavbarMenu(
+    label: 'Security',
+    icon: TablerIcons.key,
+    menu: NavbarMenuEnum.security,
+  ),
+  NavbarMenu(
+    label: 'Import/Export',
+    icon: TablerIcons.database,
+    menu: NavbarMenuEnum.import_and_export,
   ),
 ];
