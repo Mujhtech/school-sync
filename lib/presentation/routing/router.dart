@@ -9,7 +9,7 @@ class AppRouter {
 
   final BuildContext _context;
 
-  void pop() => Navigator.of(_context).pop();
+  void goBack() => Navigator.of(_context).pop();
 
   Future<void> goToCreateSchool() =>
       _goTo((_) => const CreateSchoolPage(), AppRoutes.createSchool);

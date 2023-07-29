@@ -28,6 +28,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.radius = 10,
     this.autofocus = false,
     this.textInputAction,
+    this.contentPadding,
     this.textCapitalization = TextCapitalization.none,
     super.key,
   }) : assert(initialValue == null || controller == null);
@@ -55,6 +56,7 @@ class PrimaryTextFormField extends StatelessWidget {
   final List<String>? autofillHints;
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
+  final EdgeInsetsGeometry? contentPadding;
 
   static PrimaryTextFormField password({
     required bool Function() onTap,
@@ -112,7 +114,7 @@ class PrimaryTextFormField extends StatelessWidget {
           ),
           inputFormatters: inputFormatters,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(10),
+            contentPadding: contentPadding ?? const EdgeInsets.all(10),
             prefix: prefix,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

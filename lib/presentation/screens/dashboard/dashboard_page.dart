@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/presentation.dart';
-import 'package:school_sync/presentation/screens/dashboard/widgets/navbar.dart';
+
+import 'widgets/navbar.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -28,6 +30,19 @@ class _DashboardPageState extends State<DashboardPage> {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
+              ),
+              child: Consumer(
+                builder: (BuildContext context, WidgetRef ref, _) {
+                  return switch (ref.watch(navbarBodyProvider).current) {
+                    NavbarMenuEnum.home => const HomePage(),
+                    NavbarMenuEnum.academic => const HomePage(),
+                    NavbarMenuEnum.students => const StudentPage(),
+                    NavbarMenuEnum.grade => const GradeSystemPage(),
+                    NavbarMenuEnum.staffs => const StaffPage(),
+                    NavbarMenuEnum.payroll => const PayrollPage(),
+                    _ => const NotFoundPage()
+                  };
+                },
               ),
             ),
           )

@@ -16,6 +16,7 @@ class PrimaryButton extends StatefulWidget {
     this.height = 50,
     this.loading = false,
     this.icon,
+    this.hoverColor,
     this.iconPosition = IconPosition.right,
     this.radius = 10,
     this.borderColor = Colors.transparent,
@@ -30,6 +31,7 @@ class PrimaryButton extends StatefulWidget {
   final double height;
   final Widget? icon;
   final double radius;
+  final Color? hoverColor;
   final Color borderColor;
   final IconPosition? iconPosition;
 
@@ -73,6 +75,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         }
         widget.onPressed();
       },
+      hoverColor: widget.hoverColor,
       color: widget.buttonColor ??
           context.buttonColor.withOpacity(disable == true ? 0.3 : 1),
       shape: RoundedRectangleBorder(

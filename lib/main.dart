@@ -112,7 +112,7 @@ Future<void> main() async {
           CreateSchoolUseCase(schools: di(), remoteDatabase: di()),
     )
     ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
-    ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
+    ..factory((RegistryFactory di) => FetchSchoolUseCase(schools: di()))
     //
     ..factory((RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()))
     ..factory((RegistryFactory di) => FetchAppThemeUseCase(preferences: di()))
