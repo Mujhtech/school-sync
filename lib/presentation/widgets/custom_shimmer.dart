@@ -3,17 +3,19 @@ import 'package:school_sync/presentation.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomShimmer extends StatelessWidget {
-  const CustomShimmer.rectangular(
-      {super.key,
-      this.width = double.infinity,
-      required this.height,
-      this.shapeBorder = const RoundedRectangleBorder()});
+  const CustomShimmer.rectangular({
+    super.key,
+    this.width = double.infinity,
+    required this.height,
+    this.shapeBorder = const RoundedRectangleBorder(),
+  });
 
-  const CustomShimmer.circular(
-      {super.key,
-      this.width = double.infinity,
-      required this.height,
-      this.shapeBorder = const CircleBorder()});
+  const CustomShimmer.circular({
+    super.key,
+    this.width = double.infinity,
+    required this.height,
+    this.shapeBorder = const CircleBorder(),
+  });
   final double width;
   final double height;
   final ShapeBorder shapeBorder;

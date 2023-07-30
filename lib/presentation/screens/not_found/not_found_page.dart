@@ -15,7 +15,7 @@ class NotFoundPage extends StatelessWidget {
           size: 150,
         ),
         Text(
-          'Nothing to see here :)',
+          AppString.nothingToSeeHere,
           textAlign: TextAlign.center,
           style: context.textTheme.bodySmall,
         )

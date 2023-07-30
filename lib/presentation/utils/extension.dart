@@ -33,6 +33,14 @@ extension ContextExtensions on BuildContext {
     return Colors.black;
   }
 
+  Color get textColorWithOpacity {
+    if (Theme.of(this).brightness == Brightness.dark) {
+      return Colors.white.withOpacity(0.5);
+    }
+
+    return Colors.black.withOpacity(0.5);
+  }
+
   Color get buttonTextColor {
     if (Theme.of(this).brightness == Brightness.dark) {
       return Colors.black;

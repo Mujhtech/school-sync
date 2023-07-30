@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
-
 import 'package:tabler_icons/tabler_icons.dart';
+
+import 'widget/addon.dart';
+import 'widget/import_or_export.dart';
+import 'widget/member.dart';
+import 'widget/my_account.dart';
+import 'widget/security.dart';
+import 'widget/setting.dart';
+import 'widget/upgrade.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -34,6 +41,10 @@ class _SettingPageState extends State<SettingPage> {
               topLeft: Radius.circular(5),
               bottomLeft: Radius.circular(5),
             ),
+            gradient: LinearGradient(
+              stops: const <double>[0.015, 0.015],
+              colors: <Color>[context.backgroundColor!, context.cardColor!],
+            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,7 +57,7 @@ class _SettingPageState extends State<SettingPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          'Manage',
+                          AppString.manage,
                           style: context.textTheme.titleSmall!.copyWith(
                             color: context.textColor.withOpacity(0.5),
                           ),
@@ -74,8 +85,8 @@ class _SettingPageState extends State<SettingPage> {
                           children: <Widget>[
                             NavLink(
                               nav: e,
-                              isActive: menu == e.menu,
-                              onClicked: () => menu = e.menu,
+                              currentMenu: menu,
+                              onClicked: (NavbarMenuEnum? val) => menu = e.menu,
                             ),
                             const Height5(),
                           ],
@@ -121,7 +132,13 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
             child: switch (menu) {
-              NavbarMenuEnum.setting => Container(),
+              NavbarMenuEnum.setting => const SettingSection(),
+              NavbarMenuEnum.account => const MyAccount(),
+              NavbarMenuEnum.security => const SecuritySection(),
+              NavbarMenuEnum.member => const MemberSection(),
+              NavbarMenuEnum.addon => const AddonSection(),
+              NavbarMenuEnum.upgrade => const UpgradeSeciton(),
+              NavbarMenuEnum.import_and_export => const ImportOrExportSection(),
               _ => const NotFoundPage(),
             },
           ),

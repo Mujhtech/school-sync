@@ -8,10 +8,14 @@ class PricingCard extends StatelessWidget {
     required this.pricing,
     required this.recurrence,
     required this.onSelected,
+    this.showUpgradeButton = false,
+    this.showCurrentPlan = false,
   });
   final PricingViewModel pricing;
   final PricingRecurrence recurrence;
   final void Function(PricingViewModel) onSelected;
+  final bool showUpgradeButton;
+  final bool showCurrentPlan;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,7 @@ class PricingCard extends StatelessWidget {
         constraints: BoxConstraints(
           minHeight: context.screenHeight(0.7) * 0.3,
           maxHeight: context.screenHeight(0.7) * 0.8,
+          maxWidth: 250,
         ),
         padding: EdgeInsets.symmetric(
           horizontal: pricing.isRecommended ? 0 : 10,
@@ -43,7 +48,7 @@ class PricingCard extends StatelessWidget {
                 color: context.iconColor,
                 child: Center(
                   child: Text(
-                    'Recommended',
+                    AppString.recommended,
                     style: context.textTheme.bodySmall!.copyWith(
                       color: context.buttonTextColor,
                       fontWeight: FontWeight.w700,
@@ -186,6 +191,32 @@ class PricingCard extends StatelessWidget {
                 ],
               ),
             ),
+            if (showUpgradeButton) ...<Widget>[
+              const Height3(),
+              Center(
+                child: PrimaryButton(
+                  onPressed: () {},
+                  width: 200,
+                  height: 35,
+                  label: AppString.upgrade,
+                ),
+              ),
+            ],
+            if (showCurrentPlan) ...<Widget>[
+              const Height3(),
+              Center(
+                child: PrimaryButton(
+                  onPressed: () {},
+                  width: 200,
+                  height: 35,
+                  disable: true,
+                  label: AppString.current,
+                  buttonColor: Colors.transparent,
+                  borderColor: context.textColorWithOpacity.withOpacity(0.1),
+                  textColor: context.textColorWithOpacity,
+                ),
+              )
+            ]
           ],
         ),
       ),

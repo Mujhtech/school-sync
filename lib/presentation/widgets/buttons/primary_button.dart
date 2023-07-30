@@ -76,6 +76,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         widget.onPressed();
       },
       hoverColor: widget.hoverColor,
+      mouseCursor: widget.disable ? SystemMouseCursors.forbidden : null,
       color: widget.buttonColor ??
           context.buttonColor.withOpacity(disable == true ? 0.3 : 1),
       shape: RoundedRectangleBorder(
