@@ -5,6 +5,7 @@ import 'package:school_sync/domain.dart';
 import 'package:school_sync/presentation.dart';
 import 'package:school_sync/presentation/screens/schools/widgets/schools_dialog.dart';
 import 'package:school_sync/presentation/screens/setting/setting_page.dart';
+import 'package:school_sync/presentation/screens/trash/trash_page.dart';
 import 'package:school_sync/presentation/states/user_provider.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 
@@ -86,7 +87,6 @@ class _NavbarState extends State<Navbar> {
                           key: Key('nav_menu-$index'),
                           nav: item,
                           currentMenu: ref.watch(navbarBodyProvider).current,
-                          
                           onClicked: (NavbarMenuEnum? val) {
                             ref
                                 .read(navbarBodyProvider.notifier)
@@ -129,8 +129,8 @@ class _NavbarState extends State<Navbar> {
                     AppDialog(
                       context: context,
                       bgColor: Colors.transparent,
-                      width: context.screenWidth(0.8),
-                      content: const SettingPage(),
+                      width: context.screenWidth(0.28),
+                      content: const TrashPage(),
                     ).show();
                   },
                 )

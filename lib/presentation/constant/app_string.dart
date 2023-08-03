@@ -39,4 +39,10 @@ class AppString {
   static const String allPlans = 'All Plans';
   static const String recommended = 'Recommended';
   static const String current = 'Current';
+  static const String code = 'Code';
+  static const String subject = 'Subject';
+  static const String year = 'Year';
+  static const String action = 'Action';
+  static const String actions = 'Actions';
+  static const String name = 'Name';
 }

@@ -33,7 +33,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 builder: (BuildContext context, WidgetRef ref, _) {
                   return switch (ref.watch(navbarBodyProvider).current) {
                     NavbarMenuEnum.home => const HomePage(),
-                    NavbarMenuEnum.academic => const HomePage(),
+                    NavbarMenuEnum.classes => const ClassesPage(),
+                    NavbarMenuEnum.subject => const SubjectsPage(),
+                    NavbarMenuEnum.session => const SessionsPage(),
                     NavbarMenuEnum.students => const StudentPage(),
                     NavbarMenuEnum.grade => const GradeSystemPage(),
                     NavbarMenuEnum.staffs => const StaffPage(),
