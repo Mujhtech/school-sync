@@ -39,3 +39,5 @@ class SyncLogEntity with EquatableMixin {
         deletedAt
       ];
 }
+
+typedef SyncLogEntityList = List<SyncLogEntity>;
