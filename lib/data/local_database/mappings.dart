@@ -52,6 +52,58 @@ extension SchoolEntityExtension on SchoolDataModel {
       );
 }
 
+extension SubjectEntityExtension on SubjectModel {
+  SubjectEntity toEntity({
+    required String tableName,
+    required TableNameModelPair<SchoolDataModel> schoolId,
+  }) =>
+      SubjectEntity(
+        id: id,
+        path: '$tableName/$id',
+        code: code,
+        title: title,
+        unit: unit,
+        school: schoolId.$2.toEntity(schoolId.$1),
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
+}
+
+extension ClassEntityExtension on ClassModel {
+  ClassEntity toEntity({
+    required String tableName,
+    required TableNameModelPair<SchoolDataModel> schoolId,
+  }) =>
+      ClassEntity(
+        id: id,
+        path: '$tableName/$id',
+        name: name,
+        code: code,
+        school: schoolId.$2.toEntity(schoolId.$1),
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
+}
+
+extension SessionEntityExtension on SessionModel {
+  SessionEntity toEntity({
+    required String tableName,
+    required TableNameModelPair<SchoolDataModel> schoolId,
+  }) =>
+      SessionEntity(
+        id: id,
+        path: '$tableName/$id',
+        name: name,
+        code: code,
+        school: schoolId.$2.toEntity(schoolId.$1),
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? DateTime.now(),
+        deletedAt: deletedAt,
+      );
+}
+
 // extension BudgetEntityExtension on BudgetDataModel {
 //   BudgetEntity toEntity(String tableName) {
 //     return BudgetEntity(

@@ -14,15 +14,14 @@ part 'tables.dart';
 part 'database.g.dart';
 
 @DriftDatabase(
-  tables: <Type>[
-    Users,
-    SyncLogs,
-    Schools,
-  ],
+  tables: <Type>[Users, SyncLogs, Schools, Sessions, Classes, Subjects],
   daos: <Type>[
     UsersDao,
     SyncLogsDao,
     SchoolsDao,
+    SubjectsDao,
+    ClassesDao,
+    SessionsDao
   ],
 )
 class Database extends _$Database {

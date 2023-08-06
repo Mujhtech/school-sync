@@ -1,53 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
 
-class SubjectsPage extends StatelessWidget {
+class SubjectsPage extends StatefulWidget {
   const SubjectsPage({super.key});
 
   @override
+  State<SubjectsPage> createState() => _SubjectsPageState();
+}
+
+class _SubjectsPageState extends State<SubjectsPage> {
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(left: 30, top: 20, right: 20),
-      children: <Widget>[
-        Text(
-          AppString.subjects,
-          style: context.textTheme.titleLarge,
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverPersistentHeader(
+          delegate: CustomSliverAppBarWithHeader(
+            title: AppString.subjects,
+            header: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        '#',
+                        style: context.textTheme.titleSmall,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        AppString.name,
+                        style: context.textTheme.titleSmall,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        AppString.code,
+                        style: context.textTheme.titleSmall,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        AppString.action,
+                        style: context.textTheme.titleSmall,
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  thickness: 0.1,
+                )
+              ],
+            ),
+          ),
+          pinned: true,
         ),
-        const Height15(),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                '#',
-                style: context.textTheme.titleSmall,
-              ),
+        SliverList.builder(
+          itemCount: 100,
+          itemBuilder: (BuildContext ctx, int index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    '#',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    AppString.name,
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    AppString.code,
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    AppString.action,
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                AppString.subject,
-                style: context.textTheme.titleSmall,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                AppString.code,
-                style: context.textTheme.titleSmall,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                AppString.action,
-                style: context.textTheme.titleSmall,
-              ),
-            ),
-          ],
-        ),
-        const Divider(
-          thickness: 0.5,
-        ),
+          ),
+        )
       ],
     );
   }

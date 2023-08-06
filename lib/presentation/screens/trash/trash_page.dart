@@ -10,7 +10,9 @@ class TrashPage extends StatelessWidget {
     return Container(
       height: context.screenHeight(0.4),
       decoration: BoxDecoration(
-          color: context.backgroundColor, borderRadius: AppBorderRadius.lg),
+        color: context.backgroundColor,
+        borderRadius: AppBorderRadius.lg,
+      ),
       child: Column(
         children: <Widget>[
           Padding(

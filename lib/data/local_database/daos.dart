@@ -66,12 +66,6 @@ class SyncLogsDao extends DatabaseAccessor<Database> with _$SyncLogsDaoMixin {
 class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
   SchoolsDao(super.db);
 
-  // Stream<SchoolEntity?> watchActiveBudget() => (select(schools)
-  //       ..where((_) => _.active.equals(true))
-  //       ..limit(1))
-  //     .map((_) => _.toEntity(budgets.actualTableName))
-  //     .watchSingleOrNull();
-
   Stream<SchoolEntity> watchSingle(String id) => (select(schools)
         ..where((_) => _.id.equals(id))
         ..where((_) => _.deletedAt.equalsNullable(null))
@@ -140,6 +134,209 @@ class SchoolsDao extends DatabaseAccessor<Database> with _$SchoolsDaoMixin {
           )
           .then((_) => _.toEntity(schools.actualTableName));
 }
+
+@DriftAccessor(tables: <Type>[Subjects, Schools])
+class SubjectsDao extends DatabaseAccessor<Database> with _$SubjectsDaoMixin {
+  SubjectsDao(super.db);
+
+  Stream<SubjectEntity> watchSingle(String schoolId, String id) =>
+      (select(subjects)
+            ..where((_) => _.schoolId.equals(schoolId) & _.id.equals(id)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(subjects.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watchSingle();
+
+  Stream<SubjectEntityList> watchAll(String schoolId) =>
+      (select(subjects)..where((_) => _.schoolId.equals(schoolId)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(subjects.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watch();
+
+  Future<bool> deleteSubject(String id) async =>
+      (update(subjects)..where((_) => _.id.equals(id)))
+          .write(
+            SubjectsCompanion(
+              deletedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<bool> updateSubject(UpdateSubjectData subject) async =>
+      (update(subjects)..where((_) => _.id.equals(subject.id)))
+          .write(
+            SubjectsCompanion(
+              title: subject.title != null
+                  ? DBValue(subject.title!)
+                  : const Value<String>.absent(),
+              code: DBValue(subject.code),
+              unit: DBValue(subject.unit),
+              updatedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<String> createSubject(CreateSubjectData subject) async =>
+      into(subjects)
+          .insertReturning(_mapToInsertData(subject))
+          .then((_) => _.id);
+
+  Insertable<SubjectModel> _mapToInsertData(CreateSubjectData subject) {
+    return SubjectsCompanion.insert(
+      title: subject.title,
+      code: DBValue(subject.code),
+      unit: DBValue(subject.unit),
+      schoolId: subject.school.id,
+      createdAt: clock.now(),
+    );
+  }
+
+  SubjectEntity _mapValueRowToEntity(TypedResult row) {
+    final SubjectModel subject = row.readTable(subjects);
+    final SchoolDataModel school = row.readTable(schools);
+
+    return subject.toEntity(
+      tableName: schools.actualTableName,
+      schoolId: (schools.actualTableName, school),
+    );
+  }
+}
+
+@DriftAccessor(tables: <Type>[Classes, Schools])
+class ClassesDao extends DatabaseAccessor<Database> with _$ClassesDaoMixin {
+  ClassesDao(super.db);
+
+  Stream<ClassEntity> watchSingle(String schoolId, String id) =>
+      (select(classes)
+            ..where((_) => _.schoolId.equals(schoolId) & _.id.equals(id)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(classes.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watchSingle();
+
+  Stream<ClassEntityList> watchAll(String schoolId) =>
+      (select(classes)..where((_) => _.schoolId.equals(schoolId)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(classes.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watch();
+
+  Future<bool> deleteClass(String id) async =>
+      (update(classes)..where((_) => _.id.equals(id)))
+          .write(
+            ClassesCompanion(
+              deletedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<bool> updateClass(UpdateClassData data) async =>
+      (update(classes)..where((_) => _.id.equals(data.id)))
+          .write(
+            ClassesCompanion(
+              name: data.name != null
+                  ? DBValue(data.name!)
+                  : const Value<String>.absent(),
+              code: DBValue(data.code),
+              updatedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<String> createClass(CreateClassData data) async =>
+      into(classes).insertReturning(_mapToInsertData(data)).then((_) => _.id);
+
+  Insertable<ClassModel> _mapToInsertData(CreateClassData data) {
+    return ClassesCompanion.insert(
+      name: data.name,
+      code: DBValue(data.code),
+      schoolId: data.school.id,
+      createdAt: clock.now(),
+    );
+  }
+
+  ClassEntity _mapValueRowToEntity(TypedResult row) {
+    final ClassModel classs = row.readTable(classes);
+    final SchoolDataModel school = row.readTable(schools);
+
+    return classs.toEntity(
+      tableName: classes.actualTableName,
+      schoolId: (schools.actualTableName, school),
+    );
+  }
+}
+
+@DriftAccessor(tables: <Type>[Sessions, Schools])
+class SessionsDao extends DatabaseAccessor<Database> with _$SessionsDaoMixin {
+  SessionsDao(super.db);
+
+  Stream<SessionEntity> watchSingle(String schoolId, String id) =>
+      (select(sessions)
+            ..where((_) => _.schoolId.equals(schoolId) & _.id.equals(id)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(sessions.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watchSingle();
+
+  Stream<SessionEntityList> watchAll(String schoolId) =>
+      (select(sessions)..where((_) => _.schoolId.equals(schoolId)))
+          .join(<DBJoin>[
+            innerJoin(schools, schools.id.equalsExp(sessions.schoolId)),
+          ])
+          .map(_mapValueRowToEntity)
+          .watch();
+
+  Future<bool> deleteClass(String id) async =>
+      (update(sessions)..where((_) => _.id.equals(id)))
+          .write(
+            SessionsCompanion(
+              deletedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<bool> updateClass(UpdateSessionData data) async =>
+      (update(sessions)..where((_) => _.id.equals(data.id)))
+          .write(
+            SessionsCompanion(
+              name: data.name != null
+                  ? DBValue(data.name!)
+                  : const Value<String>.absent(),
+              code: DBValue(data.code),
+              updatedAt: DBValue(clock.now()),
+            ),
+          )
+          .then((_) => true);
+
+  Future<String> createSession(CreateSessionData data) async =>
+      into(sessions).insertReturning(_mapToInsertData(data)).then((_) => _.id);
+
+  Insertable<SessionModel> _mapToInsertData(CreateSessionData data) {
+    return SessionsCompanion.insert(
+      name: data.name,
+      code: DBValue(data.code),
+      schoolId: data.school.id,
+      createdAt: clock.now(),
+    );
+  }
+
+  SessionEntity _mapValueRowToEntity(TypedResult row) {
+    final SessionModel data = row.readTable(sessions);
+    final SchoolDataModel school = row.readTable(schools);
+
+    return data.toEntity(
+      tableName: sessions.actualTableName,
+      schoolId: (schools.actualTableName, school),
+    );
+  }
+}
+
 
 // @DriftAccessor(tables: <Type>[BudgetPlans, BudgetCategories])
 // class BudgetPlansDao extends DatabaseAccessor<Database>

@@ -1,8 +1,17 @@
 export 'domain/entities/account_entity.dart';
+export 'domain/entities/class_entity.dart';
+export 'domain/entities/create_class_data.dart';
 export 'domain/entities/create_school_data.dart';
+export 'domain/entities/create_session_data.dart';
+export 'domain/entities/create_subject_data.dart';
 export 'domain/entities/reference_entity.dart';
 export 'domain/entities/school_entity.dart';
+export 'domain/entities/session_entity.dart';
+export 'domain/entities/subject_entity.dart';
+export 'domain/entities/update_class_data.dart';
 export 'domain/entities/update_school_data.dart';
+export 'domain/entities/update_session_data.dart';
+export 'domain/entities/update_subject_data.dart';
 export 'domain/entities/user_entity.dart';
 export 'domain/repositories/auth.dart';
 export 'domain/repositories/current_school_id.dart';

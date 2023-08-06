@@ -54,8 +54,46 @@ class Schools extends Table
   TextColumn get name => text()();
 }
 
-// @DataClassName('AccountDataModel')
-// class Accounts extends Table with _UniquePrimaryKey {}
+@DataClassName('ClassModel')
+class Classes extends Table
+    with
+        _UniquePrimaryKey,
+        _SchoolIdKey,
+        _CreatedAtKey,
+        _UpdatedAtKey,
+        _DeletedAtKey {
+  TextColumn get name => text()();
+
+  TextColumn get code => text().nullable()();
+}
+
+@DataClassName('SessionModel')
+class Sessions extends Table
+    with
+        _UniquePrimaryKey,
+        _SchoolIdKey,
+        _CreatedAtKey,
+        _UpdatedAtKey,
+        _DeletedAtKey {
+  TextColumn get name => text()();
+
+  TextColumn get code => text().nullable()();
+}
+
+@DataClassName('SubjectModel')
+class Subjects extends Table
+    with
+        _UniquePrimaryKey,
+        _SchoolIdKey,
+        _CreatedAtKey,
+        _UpdatedAtKey,
+        _DeletedAtKey {
+  TextColumn get title => text()();
+
+  TextColumn get code => text().nullable()();
+
+  IntColumn get unit => integer().nullable()();
+}
 
 // @DataClassName('BudgetDataModel')
 // class Budgets extends Table
@@ -97,16 +135,6 @@ class Schools extends Table
 //   IntColumn get colorSchemeIndex => integer()();
 // }
 
-// @DataClassName('BudgetAllocationDataModel')
-// class BudgetAllocations extends Table
-//     with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey {
-//   IntColumn get amount => integer()();
-
-//   TextColumn get budget => text().references(Budgets, #id)();
-
-//   TextColumn get plan => text().references(BudgetPlans, #id)();
-// }
-
 // @DataClassName('BudgetMetadataKeyDataModel')
 // class BudgetMetadataKeys extends Table
 //     with
@@ -145,6 +173,10 @@ mixin _UniquePrimaryKey on Table {
 
 //   TextColumn get description => text()();
 // }
+
+mixin _SchoolIdKey on Table {
+  TextColumn get schoolId => text().references(Schools, #id)();
+}
 
 mixin _CreatedAtKey on Table {
   DateTimeColumn get createdAt => dateTime()();

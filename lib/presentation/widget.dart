@@ -2,6 +2,7 @@ export 'widgets/app_crash_view.dart';
 export 'widgets/app_dialog.dart';
 export 'widgets/buttons/primary_button.dart';
 export 'widgets/custom_app_bar.dart';
+export 'widgets/custom_sliver_appbar_with_header.dart';
 export 'widgets/loading_spinner.dart';
 export 'widgets/primary_textformfield.dart';
 export 'widgets/scroll_behavior.dart';
