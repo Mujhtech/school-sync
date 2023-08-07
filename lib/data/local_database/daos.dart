@@ -292,7 +292,7 @@ class SessionsDao extends DatabaseAccessor<Database> with _$SessionsDaoMixin {
           .map(_mapValueRowToEntity)
           .watch();
 
-  Future<bool> deleteClass(String id) async =>
+  Future<bool> deleteSession(String id) async =>
       (update(sessions)..where((_) => _.id.equals(id)))
           .write(
             SessionsCompanion(
@@ -301,7 +301,7 @@ class SessionsDao extends DatabaseAccessor<Database> with _$SessionsDaoMixin {
           )
           .then((_) => true);
 
-  Future<bool> updateClass(UpdateSessionData data) async =>
+  Future<bool> updateSession(UpdateSessionData data) async =>
       (update(sessions)..where((_) => _.id.equals(data.id)))
           .write(
             SessionsCompanion(

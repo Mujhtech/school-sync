@@ -99,6 +99,9 @@ Future<void> main() async {
     ..set(repository.schools)
     ..set(repository.preferences)
     ..set(repository.currentSchool)
+    ..set(repository.sessions)
+    ..set(repository.subjects)
+    ..set(repository.classes)
 
     /// UseCases.
     ..factory((RegistryFactory di) => RegisterUseCase(auth: di()))
@@ -123,6 +126,39 @@ Future<void> main() async {
     )
     ..factory(
       (RegistryFactory di) => FetchCurrentSchoolIdUseCase(currentSchool: di()),
+    )
+
+    //
+    ..factory(
+      (RegistryFactory di) => FetchSubjectsUseCase(subjectsRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => UpdateSubjectUseCase(subjectsRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => CreateSubjectUseCase(subjectsRepository: di()),
+    )
+
+    //
+    ..factory(
+      (RegistryFactory di) => FetchClassesUseCase(classesRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => UpdateClassUseCase(classesRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => CreateClassUseCase(classesRepository: di()),
+    )
+
+    //
+    ..factory(
+      (RegistryFactory di) => FetchSessionsUseCase(sessionsRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => UpdateSessionUseCase(sessionsRepository: di()),
+    )
+    ..factory(
+      (RegistryFactory di) => CreateSessionUseCase(sessionsRepository: di()),
     )
 
     /// Repositories.
@@ -213,13 +249,19 @@ class _Repository {
     required this.currentSchool,
   })  : auth = AuthRemoteImpl(supabase, authIdentityStorage),
         users = UsersLocalImpl(db),
-        schools = SchoolsLocalImpl(db);
+        schools = SchoolsLocalImpl(db),
+        sessions = SessionsLocalImpl(db),
+        subjects = SubjectsLocalImpl(db),
+        classes = ClassesLocalImpl(db);
 
   final AuthRepository auth;
   final UsersRepository users;
   final SchoolsRepository schools;
   final CurrentSchoolIdRepository currentSchool;
   final PreferencesRepository preferences;
+  final SubjectsRepository subjects;
+  final ClassesRepository classes;
+  final SessionsRepository sessions;
 }
 
 class _LocalDatabaseUtility {
