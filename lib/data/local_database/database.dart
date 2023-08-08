@@ -38,7 +38,7 @@ class Database extends _$Database {
   Database.memory() : super(NativeDatabase.memory(logStatements: true));
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -48,10 +48,15 @@ class Database extends _$Database {
         onUpgrade: (Migrator m, int from, int to) async {
           if (from < 4) {
             await Future.wait(<Future<void>>[
-              m.addColumn(schools, schools.schoolType)
-              // m.createTable(budgetMetadataKeys),
-              // m.createTable(budgetMetadataValues),
-              // m.createTable(budgetMetadataAssociations),
+              m.addColumn(schools, schools.schoolType),
+            ]);
+          }
+
+          if (from < 6) {
+            await Future.wait(<Future<void>>[
+              m.createTable(classes),
+              m.createTable(subjects),
+              m.createTable(sessions),
             ]);
           }
         },
