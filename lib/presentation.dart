@@ -8,5 +8,3 @@ export 'presentation/state.dart';
 export 'presentation/theme.dart';
 export 'presentation/util.dart';
 export 'presentation/widget.dart';
-export 'presentation/widgets/error_views.dart';
-export 'presentation/widgets/hyper_link.dart';

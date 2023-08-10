@@ -38,10 +38,6 @@ class _NavLinkState extends State<NavLink> {
       onTap: () => hasSubMenu ? isOpen = !_isOpen : widget.onClicked.call(null),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        // onHover: (PointerHoverEvent event) {
-        //   isHover = !isHover;
-        //   setState(() {});
-        // },
         onEnter: (PointerEnterEvent event) {
           isHover = !isHover;
           setState(() {});
@@ -67,6 +63,8 @@ class _NavLinkState extends State<NavLink> {
                 ],
                 Container(
                   padding: const EdgeInsets.all(5),
+                  // TODO(Mujhtech): Fix width to auto expand
+                  width: context.navbarWidth * 0.8,
                   decoration: BoxDecoration(
                     color: isHover || isActive
                         ? context.theme.iconTheme.color!.withOpacity(0.2)

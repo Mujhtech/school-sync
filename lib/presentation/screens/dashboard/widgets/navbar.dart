@@ -7,6 +7,7 @@ import 'package:school_sync/presentation/screens/schools/widgets/schools_dialog.
 import 'package:school_sync/presentation/screens/setting/setting_page.dart';
 import 'package:school_sync/presentation/screens/trash/trash_page.dart';
 import 'package:school_sync/presentation/states/user_provider.dart';
+
 import 'package:tabler_icons/tabler_icons.dart';
 
 class Navbar extends StatefulWidget {
@@ -68,8 +69,28 @@ class _NavbarState extends State<Navbar> {
                             err.toString(),
                             style: context.textTheme.bodySmall,
                           ),
-                          // TODO(Mujhtech): Showing skeleton widget
-                          loading: () => const SizedBox.shrink(),
+                          loading: () => Row(
+                            children: <Widget>[
+                              const CustomShimmer.rectangular(
+                                height: 20,
+                                width: 20,
+                                shapeBorder: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(99)),
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomShimmer.rectangular(
+                                  height: 20,
+                                  width: context.screenWidth(),
+                                  shapeBorder: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         );
                   },
                 ),
@@ -171,8 +192,28 @@ class _NavbarState extends State<Navbar> {
                               err.toString(),
                               style: context.textTheme.bodySmall,
                             ),
-                            // TODO(Mujhtech): Showing skeleton widget
-                            loading: () => const SizedBox.shrink(),
+                            loading: () => Row(
+                              children: <Widget>[
+                                const CustomShimmer.rectangular(
+                                  height: 20,
+                                  width: 20,
+                                  shapeBorder: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(99)),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomShimmer.rectangular(
+                                    height: 20,
+                                    width: context.screenWidth(),
+                                    shapeBorder: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                     },
                   ),
@@ -224,8 +265,14 @@ class _NavbarState extends State<Navbar> {
                               err.toString(),
                               style: context.textTheme.bodySmall,
                             ),
-                            // TODO(Mujhtech): Showing skeleton widget
-                            loading: () => const SizedBox.shrink(),
+                            loading: () => const CustomShimmer.rectangular(
+                              height: 20,
+                              width: 20,
+                              shapeBorder: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(99)),
+                              ),
+                            ),
                           );
                     },
                   ),

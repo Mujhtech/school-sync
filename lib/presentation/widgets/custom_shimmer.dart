@@ -22,14 +22,14 @@ class CustomShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: context.cardColor!.withOpacity(0.03),
-        highlightColor: context.cardColor!.withOpacity(0.7),
+        baseColor: context.buttonColor.withOpacity(0.03),
+        highlightColor: context.buttonColor.withOpacity(0.4),
         period: const Duration(seconds: 2),
         child: Container(
           width: width,
           height: height,
           decoration: ShapeDecoration(
-            color: context.cardColor!.withOpacity(0.5),
+            color: context.buttonColor.withOpacity(0.3),
             shape: shapeBorder,
           ),
         ),

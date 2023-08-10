@@ -87,7 +87,7 @@ class _SelectSchoolPageState extends State<SelectSchoolPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Nothing to see here, Let's create your first school",
+                                "${AppString.nothingToSeeHere}, Let's create your first school",
                                 style: context.textTheme.bodySmall,
                               ),
                               const Height15(),

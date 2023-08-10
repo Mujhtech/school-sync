@@ -27,7 +27,7 @@ class _CreateSchoolPageState extends State<CreateSchoolPage> {
                   width: context.screenWidth(0.1),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
+                  onTap: () => context.router.goBack(),
                   child: CircleAvatar(
                     backgroundColor: context.backgroundColor,
                     radius: 20,

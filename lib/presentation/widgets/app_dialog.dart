@@ -7,8 +7,15 @@ class AppDialog {
     this.width = 80,
     this.bgColor,
     this.padding = const EdgeInsets.all(20),
+    this.margin = const EdgeInsets.symmetric(
+      horizontal: 20,
+    ),
     this.borderRadius = 5,
     this.barrierDismissible = true,
+    this.mainAxisAlignment = MainAxisAlignment.center,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.begin,
+    this.end = Offset.zero,
   });
   final Widget content;
   BuildContext context;
@@ -17,6 +24,11 @@ class AppDialog {
   final bool barrierDismissible;
   final Color? bgColor;
   final EdgeInsets padding;
+  final EdgeInsets margin;
+  final MainAxisAlignment mainAxisAlignment;
+  final Offset? begin;
+  final Offset end;
+  final CrossAxisAlignment crossAxisAlignment;
 
   Future<T?> show<T extends Object?>() {
     return showGeneralDialog(
@@ -26,38 +38,51 @@ class AppDialog {
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 450),
       pageBuilder: (_, __, ___) {
+        Widget child = Column(
+          mainAxisAlignment: mainAxisAlignment,
+          crossAxisAlignment: crossAxisAlignment,
+          children: <Widget>[
+            Container(
+              width: width,
+              margin: margin,
+              padding: padding,
+              decoration: BoxDecoration(
+                color: bgColor ?? Theme.of(context).colorScheme.background,
+                borderRadius: BorderRadius.circular(borderRadius),
+              ),
+              child: content,
+            )
+          ],
+        );
+
+        if (mainAxisAlignment == MainAxisAlignment.center) {
+          child = Center(
+            child: child,
+          );
+        }
+
         return Material(
           color: Colors.transparent,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: width,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                  padding: padding,
-                  decoration: BoxDecoration(
-                    color: bgColor ?? Theme.of(context).colorScheme.background,
-                    borderRadius: BorderRadius.circular(borderRadius),
-                  ),
-                  child: content,
-                )
-              ],
-            ),
-          ),
+          child: child,
         );
       },
       transitionBuilder: (_, Animation<double> anim, __, Widget child) {
-        Tween<Offset> tween;
+        Animatable<Offset> tween;
 
-        Tween<Offset> setTween([double dx = 1, double dy = 0]) {
-          return Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+        Animatable<Offset> setTween([double dx = 0, double dy = 0]) {
+          return Tween<Offset>(begin: Offset(dx, dy), end: end)
+              .chain(CurveTween(curve: Curves.ease));
         }
 
-        tween =
-            anim.status == AnimationStatus.reverse ? setTween(0) : setTween(-1);
+        tween = anim.status == AnimationStatus.reverse
+            ? setTween(
+                begin?.dx ?? 0,
+                begin?.dx ?? -1,
+              )
+            : setTween(
+                begin?.dx ?? 0,
+                begin?.dx ?? -1,
+              );
 
         return SlideTransition(
           position: tween.animate(anim),
