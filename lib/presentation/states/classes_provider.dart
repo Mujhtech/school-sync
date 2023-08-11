@@ -12,23 +12,72 @@ part 'classes_provider.g.dart';
     CurrentSelectedSchool,
   ],
 )
-Stream<List<ClassViewModel>> classes(ClassesRef ref) async* {
-  final Registry registry = ref.read(registryProvider);
-  final String? currentSelectedSchoolId =
-      await ref.watch(currentSelectedSchoolProvider.selectAsync((_) => _.id));
+class Classes extends _$Classes {
+  @override
+  Stream<List<ClassViewModel>> build() async* {
+    final Registry registry = ref.read(registryProvider);
+    final String? currentSelectedSchoolId =
+        await ref.watch(currentSelectedSchoolProvider.selectAsync((_) => _.id));
 
-  if (currentSelectedSchoolId != null) {
-    yield* registry
-        .get<FetchClassesUseCase>()
-        .call(currentSelectedSchoolId)
-        .map(
-          (ClassEntityList subjects) => subjects
-              .map(ClassViewModel.fromEntity)
-              .sorted(
-                (ClassViewModel a, ClassViewModel b) =>
-                    b.createdAt.compareTo(a.createdAt),
-              )
-              .toList(growable: false),
+    if (currentSelectedSchoolId != null) {
+      yield* registry
+          .get<FetchClassesUseCase>()
+          .call(currentSelectedSchoolId)
+          .map(
+            (ClassEntityList subjects) => subjects
+                .map(ClassViewModel.fromEntity)
+                .sorted(
+                  (ClassViewModel a, ClassViewModel b) =>
+                      b.createdAt.compareTo(a.createdAt),
+                )
+                .toList(growable: false),
+          );
+    }
+  }
+
+  Future<String> createClass({
+    required String name,
+    required String code,
+  }) async {
+    final Registry registry = ref.read(registryProvider);
+    final SchoolViewModel? currentSelectedSchool = await ref
+        .watch(currentSelectedSchoolProvider.selectAsync((_) => _.school));
+
+    if (currentSelectedSchool != null) {
+      return registry.get<CreateClassUseCase>().call(
+            CreateClassData(
+              name: name,
+              code: code,
+              school: (
+                id: currentSelectedSchool.id,
+                path: currentSelectedSchool.path
+              ),
+            ),
+          );
+    } else {
+      throw 'Select school to continue';
+    }
+  }
+
+  Future<bool> updateClass({
+    required String id,
+    required String name,
+    required String code,
+  }) async {
+    final Registry registry = ref.read(registryProvider);
+
+    return registry.get<UpdateClassUseCase>().call(
+          UpdateClassData(id: id, name: name, code: code),
         );
+  }
+
+  Future<bool> delete({
+    required ReferenceEntity plan,
+    required ReferenceEntity metadata,
+  }) async {
+    // final Registry registry = ref.read(registryProvider);
+    // final UserEntity user = await ref.watch(userProvider.future);
+
+    return true;
   }
 }

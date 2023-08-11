@@ -88,47 +88,54 @@ class _ClassesPageState extends State<ClassesPage> {
                           label: 'Get started',
                         ),
                       )
-                    : SliverList.builder(
-                        itemCount: data.length,
-                        itemBuilder: (BuildContext ctx, int index) {
-                          final int no = index + 1;
-                          final ClassViewModel item = data[index];
+                    : SliverPadding(
+                        padding: EdgeInsets.only(
+                          top: 20,
+                          bottom: MediaQuery.paddingOf(context).bottom,
+                        ),
+                        sliver: SliverList.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            final int no = index + 1;
+                            final ClassViewModel item = data[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    '$no',
-                                    style: context.textTheme.titleSmall,
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      '$no',
+                                      style: context.textTheme.titleSmall,
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    item.name,
-                                    style: context.textTheme.titleSmall,
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(
+                                      item.name,
+                                      style: context.textTheme.titleSmall,
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    item.code ?? '',
-                                    style: context.textTheme.titleSmall,
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      item.code ?? '',
+                                      style: context.textTheme.titleSmall,
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    AppString.action,
-                                    style: context.textTheme.titleSmall,
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      AppString.action,
+                                      style: context.textTheme.titleSmall,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                 error: (Object error, StackTrace trace) =>
                     SliverToBoxAdapter(child: ErrorView(error, trace)),

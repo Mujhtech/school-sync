@@ -46,4 +46,5 @@ class AppString {
   static const String actions = 'Actions';
   static const String name = 'Name';
   static const String title = 'Title';
+  static const String unit = 'Unit';
 }

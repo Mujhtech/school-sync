@@ -14,9 +14,11 @@ dependencies:
   clock: ^1.1.1
   collection: ^1.17.1
   cupertino_icons: ^1.0.2
+  d_chart: ^2.3.0
   device_info_plus: ^9.0.2
   drift: ^2.10.0
   equatable: ^2.0.5
+  fl_chart: ^0.63.0
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
