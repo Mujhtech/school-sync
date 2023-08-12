@@ -31,6 +31,7 @@ class AppString {
   static const String inflowAndExpense = 'Inflow & Expense';
   static const String dashboard = 'Dashboard';
   static const String classes = 'Classes';
+  static const String classe = 'Class';
   static const String subjects = 'Subjects';
   static const String sessions = 'Sessions';
   static const String importDb = 'Import Database';
@@ -47,4 +48,13 @@ class AppString {
   static const String name = 'Name';
   static const String title = 'Title';
   static const String unit = 'Unit';
+  static const String getStarted = 'Get started';
+  static const String createSubject = 'Create subject';
+  static const String editSubject = 'Edit subject';
+  static const String createClass = 'Create class';
+  static const String editClass = 'Edit class';
+  static const String createSession = 'Create session';
+  static const String editSession = 'Edit session';
+  static const String continueText = 'Continue';
+  static const String createdSuccessfully = 'Created successfully';
 }

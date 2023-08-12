@@ -88,7 +88,7 @@ class _CreateSubjectFormState extends State<CreateSubjectForm> {
                     Expanded(
                       child: PrimaryButton(
                         height: 40,
-                        label: 'Continue',
+                        label: AppString.continueText,
                         loading: _isLoading,
                         onPressed: () async {
                           if (!_formKey.currentState!.validate()) {
@@ -113,13 +113,13 @@ class _CreateSubjectFormState extends State<CreateSubjectForm> {
                                 );
 
                             // ignore: use_build_context_synchronously
-                            context.snackBar.success(
-                              'Created successfully',
-                              duration: const Duration(milliseconds: 10),
-                            );
+                            context.router.goBack();
 
                             // ignore: use_build_context_synchronously
-                            context.router.goBack();
+                            context.snackBar.success(
+                              AppString.createdSuccessfully,
+                              duration: const Duration(milliseconds: 10),
+                            );
                           } catch (error, stackTrace) {
                             context.snackBar.error(
                               error.toString(),
@@ -139,7 +139,7 @@ class _CreateSubjectFormState extends State<CreateSubjectForm> {
                         textColor: context.textColor,
                         buttonColor: Colors.transparent,
                         height: 40,
-                        label: 'Cancel',
+                        label: AppString.cancel,
                         disable: _isLoading,
                         onPressed: () async => context.router.goBack(),
                       ),

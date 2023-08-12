@@ -57,10 +57,20 @@ class _NavbarState extends State<Navbar> {
                                   ),
                                 ),
                                 const Width10(),
-                                Icon(
-                                  TablerIcons.search,
-                                  size: 15,
-                                  color: context.iconColor!.withOpacity(0.5),
+                                HyperLink(
+                                  onTap: () {
+                                    AppDialog(
+                                      context: context,
+                                      bgColor: Colors.transparent,
+                                      width: context.screenWidth(0.5),
+                                      content: const SearchPage(),
+                                    ).show();
+                                  },
+                                  child: Icon(
+                                    TablerIcons.search,
+                                    size: 15,
+                                    color: context.iconColor!.withOpacity(0.5),
+                                  ),
                                 )
                               ],
                             ),
@@ -126,7 +136,7 @@ class _NavbarState extends State<Navbar> {
                 Padding(
                   padding: const EdgeInsets.only(left: 5),
                   child: Text(
-                    'Quick link',
+                    AppString.quickLink,
                     style: context.textTheme.titleSmall!
                         .copyWith(color: context.textColor.withOpacity(0.5)),
                   ),

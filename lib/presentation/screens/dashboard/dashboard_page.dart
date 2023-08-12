@@ -40,6 +40,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     NavbarMenuEnum.grade => const GradeSystemPage(),
                     NavbarMenuEnum.staffs => const StaffPage(),
                     NavbarMenuEnum.payroll => const PayrollPage(),
+                    NavbarMenuEnum.inflow_and_expense =>
+                      const InfowAndExpensePage(),
                     _ => const NotFoundPage()
                   };
                 },

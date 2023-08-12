@@ -5,6 +5,8 @@ class StaffPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        children: <Widget>[]);
   }
 }

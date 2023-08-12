@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:school_sync/presentation.dart';
+import 'package:tabler_icons/tabler_icons.dart';
 import 'widgets/create_class_form.dart';
 
 class ClassesPage extends StatefulWidget {
@@ -11,23 +12,27 @@ class ClassesPage extends StatefulWidget {
 }
 
 class _ClassesPageState extends State<ClassesPage> {
-  bool _isHeaderSticky = false;
-  bool get isHeaderSticky => _isHeaderSticky;
-  set isHeaderSticky(bool value) {
-    setState(() {
-      _isHeaderSticky = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
         SliverPersistentHeader(
           delegate: CustomSliverAppBarWithHeader(
+            actions: <Widget>[
+              HyperLink(
+                child: Icon(
+                  TablerIcons.circle_plus,
+                  size: 18,
+                  color: context.iconColor,
+                ),
+                onTap: () => AppDrawer(
+                  content: const CreateClassForm(),
+                  title: AppString.createClass,
+                  context: context,
+                ).show(),
+              )
+            ],
             title: AppString.classes,
-            isSticky: _isHeaderSticky,
-            onSticky: (bool sticky) => isHeaderSticky = sticky,
             header: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -62,9 +67,7 @@ class _ClassesPageState extends State<ClassesPage> {
                     ),
                   ],
                 ),
-                const Divider(
-                  thickness: 0.1,
-                )
+                const Height5(),
               ],
             ),
           ),
@@ -82,10 +85,10 @@ class _ClassesPageState extends State<ClassesPage> {
                         child: EmptyData(
                           action: () => AppDrawer(
                             content: const CreateClassForm(),
-                            title: 'Create class',
+                            title: AppString.createClass,
                             context: context,
                           ).show(),
-                          label: 'Get started',
+                          label: AppString.getStarted,
                         ),
                       )
                     : SliverPadding(
@@ -93,8 +96,10 @@ class _ClassesPageState extends State<ClassesPage> {
                           top: 20,
                           bottom: MediaQuery.paddingOf(context).bottom,
                         ),
-                        sliver: SliverList.builder(
+                        sliver: SliverList.separated(
                           itemCount: data.length,
+                          separatorBuilder: (BuildContext ctx, int index) =>
+                              const Height15(),
                           itemBuilder: (BuildContext ctx, int index) {
                             final int no = index + 1;
                             final ClassViewModel item = data[index];
@@ -126,9 +131,16 @@ class _ClassesPageState extends State<ClassesPage> {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text(
-                                      AppString.action,
-                                      style: context.textTheme.titleSmall,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: HyperLink(
+                                        onTap: () {},
+                                        child: Icon(
+                                          TablerIcons.dots_circle_horizontal,
+                                          size: 18,
+                                          color: context.iconColor,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],

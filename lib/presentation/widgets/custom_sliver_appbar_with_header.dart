@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
 
 class CustomSliverAppBarWithHeader extends SliverPersistentHeaderDelegate {
-  const CustomSliverAppBarWithHeader({
-    this.header,
-    this.onSticky,
-    this.isSticky = false,
-    required this.title,
-  });
+  const CustomSliverAppBarWithHeader(
+      {this.header,
+      this.onSticky,
+      this.isSticky = false,
+      required this.title,
+      this.actions});
   final Widget? header;
   final void Function(bool)? onSticky;
   final bool isSticky;
   final String title;
+  final List<Widget>? actions;
 
   @override
   Widget build(
@@ -46,11 +47,17 @@ class CustomSliverAppBarWithHeader extends SliverPersistentHeaderDelegate {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(
-                  title,
-                  style: shrinkOffset < 50
-                      ? context.textTheme.headlineLarge
-                      : context.textTheme.titleLarge,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      title,
+                      style: shrinkOffset < 50
+                          ? context.textTheme.headlineLarge
+                          : context.textTheme.titleLarge,
+                    ),
+                    if (actions != null) Row(children: actions!)
+                  ],
                 )
               ],
             ),

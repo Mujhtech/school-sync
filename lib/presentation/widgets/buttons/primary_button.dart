@@ -68,7 +68,11 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   Widget build(BuildContext context) {
     return MaterialButton(
       hoverElevation: 0,
+      highlightElevation: 0,
+      disabledElevation: 0,
       elevation: 0,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onPressed: () {
         if (loading || disable) {
           return;
