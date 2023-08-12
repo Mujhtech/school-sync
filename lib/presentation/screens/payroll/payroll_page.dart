@@ -118,59 +118,60 @@ class PayrollPage extends StatelessWidget {
           child: Height10(),
         ),
         SliverList.separated(
-            itemCount: 50,
-            itemBuilder: (BuildContext context, int index) => Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          '${index + 1}',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Status',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          'Staff',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Total payment',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Pay date',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Approve date',
-                          style: context.textTheme.titleSmall,
-                        ),
-                      ),
-                    ],
+          itemCount: 50,
+          itemBuilder: (BuildContext context, int index) => Padding(
+            padding: const EdgeInsets.only(
+              left: 20.0,
+              right: 20,
+            ),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    '${index + 1}',
+                    style: context.textTheme.titleSmall,
                   ),
                 ),
-            separatorBuilder: (BuildContext context, int index) =>
-                const Height15())
+                Expanded(
+                  child: Text(
+                    'Status',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    'Staff',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Total payment',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Pay date',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Approve date',
+                    style: context.textTheme.titleSmall,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          separatorBuilder: (BuildContext context, int index) =>
+              const Height15(),
+        )
       ],
     );
   }

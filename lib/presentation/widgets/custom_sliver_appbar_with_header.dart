@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
 
 class CustomSliverAppBarWithHeader extends SliverPersistentHeaderDelegate {
-  const CustomSliverAppBarWithHeader(
-      {this.header,
-      this.onSticky,
-      this.isSticky = false,
-      required this.title,
-      this.actions});
+  const CustomSliverAppBarWithHeader({
+    this.header,
+    this.onSticky,
+    this.isSticky = false,
+    required this.title,
+    this.actions,
+  });
   final Widget? header;
   final void Function(bool)? onSticky;
   final bool isSticky;
