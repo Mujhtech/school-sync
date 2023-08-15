@@ -6,15 +6,23 @@ class SecuritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(left: 50, right: 30, top: 30, bottom: 10),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          AppString.allPlans,
-          style: context.textTheme.titleMedium,
-        ),
-        const Divider(
-          thickness: 0.5,
+        Expanded(
+          child: ListView(
+            padding:
+                const EdgeInsets.only(left: 50, right: 30, top: 30, bottom: 10),
+            children: <Widget>[
+              Text(
+                AppString.security,
+                style: context.textTheme.titleMedium,
+              ),
+              const Divider(
+                thickness: 0.5,
+              ),
+            ],
+          ),
         ),
       ],
     );

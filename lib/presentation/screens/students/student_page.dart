@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
-import 'package:school_sync/presentation/screens/students/widgets/student_graph.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:tabler_icons/tabler_icons.dart';
+
+import 'widgets/student_enrollment_banner.dart';
+import 'widgets/student_graph.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
@@ -19,39 +21,48 @@ class _StudentPageState extends State<StudentPage> {
         SliverPadding(
           padding:
               const EdgeInsets.only(left: 20.0, right: 20, top: 20, bottom: 5),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              children: <Widget>[
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    StudentGraph(),
-                    Width10(),
-                    StudentGraph(),
-                    Width10(),
-                    StudentGraph(),
-                  ],
-                ),
-                const Height15(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      AppString.students,
-                      style: context.textTheme.titleSmall,
+          sliver: SliverList.list(
+            children: <Widget>[
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  StudentGraph(),
+                  Width10(),
+                  StudentGraph(),
+                  Width10(),
+                  StudentGraph(),
+                ],
+              ),
+              const Height15(),
+              const StudentEnrollmentBanner(),
+              const Height15(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    AppString.students,
+                    style: context.textTheme.titleSmall,
+                  ),
+                  HyperLink(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          TablerIcons.circle_plus,
+                          size: 18,
+                          color: context.iconColor,
+                        ),
+                        const Width3(),
+                        Text(
+                          'Add Student',
+                          style: context.textTheme.titleSmall,
+                        ),
+                      ],
                     ),
-                    HyperLink(
-                      child: Icon(
-                        TablerIcons.circle_plus,
-                        size: 18,
-                        color: context.iconColor,
-                      ),
-                      onTap: () {},
-                    )
-                  ],
-                )
-              ],
-            ),
+                    onTap: () {},
+                  )
+                ],
+              )
+            ],
           ),
         ),
         SliverPinnedHeader(
@@ -80,14 +91,14 @@ class _StudentPageState extends State<StudentPage> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    AppString.classe,
+                    AppString.admissionNo,
                     style: context.textTheme.titleSmall,
                   ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(
-                    AppString.unit,
+                    AppString.classe,
                     style: context.textTheme.titleSmall,
                   ),
                 ),

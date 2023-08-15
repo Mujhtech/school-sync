@@ -8,6 +8,7 @@ export 'widgets/custom_sliver_appbar_with_header.dart';
 export 'widgets/empty_data.dart';
 export 'widgets/error_views.dart';
 export 'widgets/hyper_link.dart';
+export 'widgets/info_banner.dart';
 export 'widgets/loading_spinner.dart';
 export 'widgets/primary_textformfield.dart';
 export 'widgets/scroll_behavior.dart';

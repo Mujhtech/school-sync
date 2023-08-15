@@ -57,4 +57,5 @@ class AppString {
   static const String editSession = 'Edit session';
   static const String continueText = 'Continue';
   static const String createdSuccessfully = 'Created successfully';
+  static const String admissionNo = 'Admission No';
 }

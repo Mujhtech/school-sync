@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:school_sync/presentation.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 
-class RunPayroll extends StatelessWidget {
-  const RunPayroll({super.key});
+class StudentEnrollmentBanner extends StatelessWidget {
+  const StudentEnrollmentBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,21 +11,21 @@ class RunPayroll extends StatelessWidget {
       content: Row(
         children: <Widget>[
           Icon(
-            TablerIcons.report_money,
+            TablerIcons.question_mark,
             size: 50,
-            color: context.textColorWithOpacity,
+            color: context.iconColor,
           ),
           const Width10(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Approve payroll: Aug 01-30',
-                style: context.textTheme.titleMedium,
+                'Do you know that?',
+                style: context.textTheme.titleLarge,
               ),
               const Height10(),
               Text(
-                "Please approve payroll by 4:00pm on Tuesday August 20th to pay your staff for\ntheir hard work. Note they'l receive their fund by Friday 29th August.",
+                'You can automate student enrollment using\nSchool Sync Form builder.',
                 style: context.textTheme.bodySmall,
               ),
               const Height10(),
@@ -33,10 +33,10 @@ class RunPayroll extends StatelessWidget {
                 height: 40,
                 width: 150,
                 onPressed: () {},
-                label: 'Approve payroll',
+                label: AppString.getStarted,
               )
             ],
-          ),
+          )
         ],
       ),
     );

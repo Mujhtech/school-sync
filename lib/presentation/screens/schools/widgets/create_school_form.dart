@@ -26,7 +26,6 @@ class _CreateSchoolFormState extends State<CreateSchoolForm> {
   SchoolType schoolType = SchoolType.basic;
   PricingRecurrence recurrence = PricingRecurrence.monthly;
 
-  bool isPasswordVisible = false;
   bool isLoading = false;
 
   @override

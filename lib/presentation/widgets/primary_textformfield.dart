@@ -114,7 +114,8 @@ class PrimaryTextFormField extends StatelessWidget {
           ),
           inputFormatters: inputFormatters,
           decoration: InputDecoration(
-            contentPadding: contentPadding ?? const EdgeInsets.all(10),
+            contentPadding: contentPadding ??
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
             prefix: prefix,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
