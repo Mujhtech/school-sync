@@ -95,6 +95,44 @@ class Subjects extends Table
   IntColumn get unit => integer().nullable()();
 }
 
+@DataClassName('ParentModel')
+class Parents extends Table
+    with _UniquePrimaryKey, _CreatedAtKey, _UpdatedAtKey, _DeletedAtKey {
+  TextColumn get name => text()();
+  TextColumn get email => text().nullable()();
+  TextColumn get phoneNumber => text().nullable()();
+  TextColumn get address => text().nullable()();
+}
+
+@DataClassName('StudentModel')
+class Students extends Table
+    with
+        _UniquePrimaryKey,
+        _SchoolIdKey,
+        _FullNameKey,
+        _CreatedAtKey,
+        _UpdatedAtKey,
+        _DeletedAtKey {
+  DateTimeColumn get dateOfBirth => dateTime().nullable()();
+  DateTimeColumn get enrollmentDate => dateTime().nullable()();
+  BoolColumn get isGraduated => boolean()();
+  DateTimeColumn get graduationDate => dateTime().nullable()();
+
+  TextColumn get parentId => text().references(Parents, #id)();
+}
+
+@DataClassName('StaffModel')
+class Staffs extends Table
+    with
+        _UniquePrimaryKey,
+        _SchoolIdKey,
+        _FullNameKey,
+        _CreatedAtKey,
+        _UpdatedAtKey,
+        _DeletedAtKey {
+  TextColumn get email => text()();
+}
+
 // @DataClassName('BudgetDataModel')
 // class Budgets extends Table
 //     with
@@ -169,13 +207,19 @@ mixin _UniquePrimaryKey on Table {
 }
 
 // mixin _TitleDescriptionKeys on Table {
-//   TextColumn get title => text()();
 
-//   TextColumn get description => text()();
 // }
 
 mixin _SchoolIdKey on Table {
   TextColumn get schoolId => text().references(Schools, #id)();
+}
+
+mixin _FullNameKey on Table {
+  TextColumn get firstName => text()();
+
+  TextColumn get lastName => text()();
+
+  TextColumn get middleName => text().nullable()();
 }
 
 mixin _CreatedAtKey on Table {
