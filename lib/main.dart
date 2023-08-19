@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:registry/registry.dart';
+import 'package:school_sync/registry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:universal_io/io.dart' as io;
@@ -61,7 +62,7 @@ Future<void> main() async {
   final CurrentSchoolIdRepository currentSchool =
       CurrentSchoolIdLocalImpl(currentSchoolIdStorage);
 
-  final _Repository repository = _Repository.local(
+  final Repository repository = Repository.local(
     // !kDebugMode
     Database(await _LocalDatabaseUtility.location()),
     // : Database.memory(),
@@ -88,81 +89,12 @@ Future<void> main() async {
     onLog: (Object? message) => debugPrint(message?.toString()),
   );
 
-  final Registry registry = Registry()
-
-    /// Repositories.
-    ..set(supabase)
-    ..set(storage)
-    ..set(remoteDatabase)
-    ..set(repository.auth)
-    ..set(repository.users)
-    ..set(repository.schools)
-    ..set(repository.preferences)
-    ..set(repository.currentSchool)
-    ..set(repository.sessions)
-    ..set(repository.subjects)
-    ..set(repository.classes)
-
-    /// UseCases.
-    ..factory((RegistryFactory di) => RegisterUseCase(auth: di()))
-    ..factory((RegistryFactory di) => LoginUseCase(auth: di()))
-    ..factory((RegistryFactory di) => CreateUserUseCase(users: di()))
-    ..factory((RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()))
-
-    //
-    ..factory(
-      (RegistryFactory di) =>
-          CreateSchoolUseCase(schools: di(), remoteDatabase: di()),
-    )
-    ..factory((RegistryFactory di) => FetchSchoolsUseCase(schools: di()))
-    ..factory((RegistryFactory di) => FetchSchoolUseCase(schools: di()))
-    //
-    ..factory((RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()))
-    ..factory((RegistryFactory di) => FetchAppThemeUseCase(preferences: di()))
-
-    ///
-    ..factory(
-      (RegistryFactory di) => UpdateCurrentSchoolIdUseCase(currentSchool: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => FetchCurrentSchoolIdUseCase(currentSchool: di()),
-    )
-
-    //
-    ..factory(
-      (RegistryFactory di) => FetchSubjectsUseCase(subjectsRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => UpdateSubjectUseCase(subjectsRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => CreateSubjectUseCase(subjectsRepository: di()),
-    )
-
-    //
-    ..factory(
-      (RegistryFactory di) => FetchClassesUseCase(classesRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => UpdateClassUseCase(classesRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => CreateClassUseCase(classesRepository: di()),
-    )
-
-    //
-    ..factory(
-      (RegistryFactory di) => FetchSessionsUseCase(sessionsRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => UpdateSessionUseCase(sessionsRepository: di()),
-    )
-    ..factory(
-      (RegistryFactory di) => CreateSessionUseCase(sessionsRepository: di()),
-    )
-
-    /// Repositories.
-    ..set(kDebugMode);
+  final Registry registry = createRegistry(
+    repository: repository,
+    remoteDatabase: remoteDatabase,
+    supabase: supabase,
+    storage: storage,
+  );
 
   final String? userId = await authIdentityStorage.get();
 
@@ -239,30 +171,6 @@ typedef _ReporterErrorEvent = ({
   Map<String, String> deviceInformation,
   Map<String, dynamic>? extra,
 });
-
-class _Repository {
-  _Repository.local(
-    Database db,
-    SupabaseClient supabase, {
-    required StringLocalStorage authIdentityStorage,
-    required this.preferences,
-    required this.currentSchool,
-  })  : auth = AuthRemoteImpl(supabase, authIdentityStorage),
-        users = UsersLocalImpl(db),
-        schools = SchoolsLocalImpl(db),
-        sessions = SessionsLocalImpl(db),
-        subjects = SubjectsLocalImpl(db),
-        classes = ClassesLocalImpl(db);
-
-  final AuthRepository auth;
-  final UsersRepository users;
-  final SchoolsRepository schools;
-  final CurrentSchoolIdRepository currentSchool;
-  final PreferencesRepository preferences;
-  final SubjectsRepository subjects;
-  final ClassesRepository classes;
-  final SessionsRepository sessions;
-}
 
 class _LocalDatabaseUtility {
   static const String _dbName = 'db.sqlite';
