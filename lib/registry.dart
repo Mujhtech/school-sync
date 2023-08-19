@@ -31,7 +31,8 @@ Registry createRegistry({
       ..factory((RegistryFactory di) => LoginUseCase(auth: di()))
       ..factory((RegistryFactory di) => CreateUserUseCase(users: di()))
       ..factory(
-          (RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()))
+        (RegistryFactory di) => FetchUserUseCase(users: di(), auth: di()),
+      )
 
       //
       ..factory(
@@ -42,7 +43,8 @@ Registry createRegistry({
       ..factory((RegistryFactory di) => FetchSchoolUseCase(schools: di()))
       //
       ..factory(
-          (RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()))
+        (RegistryFactory di) => UpdateAppThemeUseCase(preferences: di()),
+      )
       ..factory((RegistryFactory di) => FetchAppThemeUseCase(preferences: di()))
 
       ///
